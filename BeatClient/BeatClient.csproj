@@ -95,6 +95,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.js" />
+    <Content Include="controllers\homePageController.js" />
+    <Content Include="controllers\loginController.js" />
+    <Content Include="controllers\menuController.js" />
+    <Content Include="controllers\personalZoneController.js" />
+    <Content Include="html\homePage.html" />
+    <Content Include="html\menu.html" />
+    <Content Include="html\personalZone.html" />
+    <Content Include="html\register.html" />
+    <Content Include="html\login.html" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -108,11 +117,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Index.html" />
-    <Content Include="MainController.js" />
+    <Content Include="styles.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="directives\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

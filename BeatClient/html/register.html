@@ -1,0 +1,46 @@
+﻿<div>
+    <h2>הרשמה</h2>
+                 <form ng-submit="register()">
+                     <table>
+                         <tr>
+                             <th>
+                                 שם משתמש
+                             </th>
+                             <td>
+                                 <input ng-model="registerForm.username" type="text" />
+                             </td>
+                         </tr>
+                         <tr>
+                             <th>
+                                 סיסמא
+                             </th>
+                             <td>
+                                 <input ng-model="registerForm.password" type="password" />
+                             </td>
+                         </tr>
+                         <tr>
+                             <th>
+                                 וודא סיסמא
+                             </th>
+                             <td>
+                                 <input ng-model="registerForm.variPassword" type="password" />
+                             </td>
+                         </tr>
+                         <tr>
+                             <th>
+                                 אימייל
+                             </th>
+                             <td>
+                                 <input ng-model="registerForm.email" type="email" />
+                             </td>
+                         </tr>
+                         <tr>
+                             <td></td>
+                             <td>
+                                 <input type="submit" value="שלח" />
+                             </td>
+                         </tr>
+                     </table>
+
+                 </form>
+</div>

@@ -5,32 +5,32 @@ beatApp.config(['$locationProvider', '$routeProvider',
             $locationProvider.hashPrefix('!');
 
             $routeProvider.
+                when('/', {
+                    templateUrl: 'html/homePage.html',
+                    controller: 'homePageController'
+                }).
                 when('/personalZone', {
-                    template: 'html/personalZone.html',
+                    templateUrl: 'html/personalZone.html',
                     controller: 'personalZoneController'
                 }).
                 when('/menu', {
-                    template: 'html/menu.html',
+                    templateUrl: 'html/menu.html',
                     controller: 'menuController'
                 }).
                 when('/login', {
-                    template: 'html/login.html',
+                    templateUrl: 'html/login.html',
                     controller: 'loginController'
                 }).
                 when('/register', {
-                    template: 'html/register.html',
+                    templateUrl: 'html/register.html',
                     controller: 'loginController'
-                }).
-                when('/', {
-                    template: 'html/home.html',
-                    controller: 'homeController'
                 }).
                 otherwise('/');
         }
     ]);
 
 beatApp.controller('BeatController', function BeatController($scope) {
-    $scope.name = 'hi Beat';
+    $scope.name = 'ברוך הבא לBeat';
 
 
 });

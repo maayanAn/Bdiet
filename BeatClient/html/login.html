@@ -1,0 +1,30 @@
+﻿<div>
+    <h2>התחברות</h2>
+    <form  class="form-horizontal" ng-submit="login()">
+        <table>
+            <tr>
+                <th>
+                    אימייל
+                </th>
+                <td>
+                    <input ng-model="loginForm.email" type="email" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    סיסמא
+                </th>
+                <td>
+                    <input ng-model="loginForm.password" type="password" />
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input class="btn btn-primary" type="submit" value="שלח" />
+                </td>
+            </tr>
+        </table>
+        
+    </form>
+</div>

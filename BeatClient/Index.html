@@ -4,11 +4,21 @@
     <title></title>
 	<meta charset="utf-8" />
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
     <script src="app.js"></script>
+    <script src="controllers/homeController.js"></script>
+    <script src="controllers/loginController.js"></script>
+    <script src="controllers/menuController.js"></script>
+    <script src="controllers/personalZoneController.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.2/bootstrap-material-design.iife.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.2/bootstrap-material-design.css">
+    
 </head>
 <body ng-controller="BeatController">
 
     {{name}}
 
+    <div ng-view></div>
 </body>
 </html>
