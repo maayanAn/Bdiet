@@ -1,3 +1,31 @@
 ﻿<div>
-    <h2>איזור אישי</h2>
+    <h1 class="title">My personal zone</h1>
+    <div class="preferences">
+        <p>Please select your nutritional Preferences:</p>
+        <select ng-model="selectedNutritionalPreferences" multiple>
+            <option ng-repeat="x in preferences" value="{{x.name}}">{{x.name}}</option>
+        </select>
+        <p>Please select your personal allergies:</p>
+        <select ng-model="selectedAllergies" multiple>
+            <option ng-repeat="x in allergies" value="{{x.name}}">{{x.name}}</option>
+        </select>
+    </div>
+    <button ng-click="createMenu()"> create my menu</button>
+    <button ng-click="getBloodTests()"> get blood tests results </button>
+
+    <div id="bloodTestsTable" ng-show="hasReceivedBloodTests === true">
+        <h2> Your blood tests results:</h2>
+        <table>
+            <tr id="tableHeaders">
+                <td>Element</td>
+                <td>Range</td>
+                <td>Value</td>
+            </tr>
+            <tr ng-repeat="x in bloodElements">
+                <td>{{ x.name }}</td>
+                <td>{{ x.range }}</td>
+                <td>{{ x.value }}</td>
+            </tr>
+        </table>
+    </div>
 </div>
