@@ -29,8 +29,8 @@ beatApp.config(['$locationProvider', '$routeProvider',
         }
     ]);
 
-beatApp.controller('BeatController', function BeatController($scope) {
-    $scope.name = 'ברוך הבא לBeat';
-
+beatApp.controller('BeatController', function BeatController($scope, $rootScope) {
+    $scope.name = 'Beat';
+    $rootScope.user = undefined;
 
 });
