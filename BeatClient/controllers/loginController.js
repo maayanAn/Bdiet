@@ -5,7 +5,7 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
     $scope.loginForm = {};
 
     $scope.usersTemp = [{
-        username: "יוסי",
+        username: "Yossi",
         password: "123",
         email: "yossi@gmail.com"
     }]
@@ -23,7 +23,7 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
 
         if (!isFound)
         {
-            alert('האימייל ו/או הסיסמא שהוכנסו שגוים');
+            alert('Incorrect E-mail or password');
         }
     }
 
@@ -31,13 +31,13 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
         var isFail = false;
 
         if ($scope.registerForm.password != $scope.registerForm.variPassword) {
-            alert('סיסמא לא תואמת בשני השדות');
+            alert('Password not the same');
             isFail = true;
         }
 
         for (var i = 0; i < $scope.usersTemp.length && !isFail; i++) {
             if ($scope.registerForm.email == $scope.usersTemp[i].email) {
-                alert('כתובת האימייל שהוכנסה נמצאת בשימוש');
+                alert('E-mail address already in use');
                 isFail = true;
             }
         }
