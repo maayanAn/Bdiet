@@ -1,30 +1,33 @@
-﻿<div>
-    <h2>Login</h2>
-    <form  class="form-horizontal" ng-submit="login()">
-        <table>
-            <tr>
-                <th>
-                    E-mail
-                </th>
-                <td>
-                    <input ng-model="loginForm.email" type="email" />
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    Password
-                </th>
-                <td>
-                    <input ng-model="loginForm.password" type="password" />
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <input class="btn btn-primary" type="submit" value="Send" />
-                </td>
-            </tr>
-        </table>
-        
-    </form>
-</div>
+﻿<section id="login">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">Login</h2>
+                <h3 class="section-subheading text-muted">To start your healthy life</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <form ng-submit="login()" name="sentMessage" id="contactForm" novalidate>
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            <div class="form-group">
+                                <input ng-model="loginForm.email" type="email" class="form-control" placeholder="Your Email *" id="email" required data-validation-required-message="Please enter your email address.">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="form-group">
+                                <input ng-model="loginForm.password" type="password" class="form-control" placeholder="Your Password *" id="phone" required data-validation-required-message="Please enter your password">
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-lg-12 text-center">
+                            <div id="success"></div>
+                            <button type="submit" class="btn btn-xl">Send</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

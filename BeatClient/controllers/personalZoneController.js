@@ -1,6 +1,6 @@
 var beatApp = angular.module('beatApp');
 
-beatApp.controller('personalZoneController', function personalZoneController($scope, $location) {
+beatApp.controller('personalZoneController', function personalZoneController($scope, $location, $anchorScroll) {
     $scope.hasReceivedBloodTests = false;
     $scope.preferences = [
         { name: "none" },
@@ -31,7 +31,9 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
             alert("we have to receive your blood tests first! please click on the right button");
         } else {
             //redirect to menu page
-            $location.path("/menu");
+            //$location.path("/menu");
+            $location.hash('menu');
+            $anchorScroll();
         }
     };
 

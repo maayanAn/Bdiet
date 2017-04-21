@@ -1,6 +1,6 @@
 ﻿var beatApp = angular.module('beatApp');
 
-beatApp.controller('loginController', function loginController($scope, $rootScope, $location) {
+beatApp.controller('loginController', function loginController($scope, $rootScope, $location, $anchorScroll) {
     $scope.registerForm = {};
     $scope.loginForm = {};
 
@@ -16,7 +16,9 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
         for (var i = 0; i < $scope.usersTemp.length && !isFound; i++) {
             if ($scope.loginForm.email == $scope.usersTemp[i].email && $scope.loginForm.password == $scope.usersTemp[i].password) {
                 $rootScope.user = $scope.usersTemp[i].username;
-                $location.path('/personalZone');
+                //$location.path('/personalZone');
+                $location.hash('personalZone');
+                $anchorScroll();
                 isFound = true;
             }
         }
@@ -49,7 +51,9 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
             });
 
             $rootScope.user = $scope.registerForm.username;
-            $location.path('/personalZone');
+            //$location.path('/personalZone');
+            $location.hash('personalZone');
+            $anchorScroll();
         }
         
     }

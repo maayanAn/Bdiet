@@ -1,33 +1,73 @@
-﻿<div>
-    <h1 class="title">My personal zone</h1>
-    <div class="preferences">
-        <p>Please select your nutritional Preferences:</p>
-        <selectpicker data-array="preferences" data-model="selectedNutritionalPreferences"></selectpicker>
-        <!--<select ng-model="selectedNutritionalPreferences" multiple class="selectpicker">
-            <option ng-repeat="x in preferences" value="{{x.name}}">{{x.name}}</option>
-        </select>-->
-        <p>Please select your personal allergies:</p>
-        <selectpicker data-array="allergies" data-model="selectedAllergies"></selectpicker>
-        <!--<select ng-model="selectedAllergies" multiple class="selectpicker" ng-options="x.name as x.name for x in allergies">
-            <option ng-repeat="x in allergies" value="{{x.name}}">{{x.name}}</option>
-        </select>-->
-    </div>
-    <button ng-click="createMenu()"> create my menu</button>
-    <button ng-click="getBloodTests()"> get blood tests results </button>
+﻿<section id="personalZone">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">My personal zone</h2>
+                <h3 class="section-subheading text-muted">To get the perfect diet for you, we need to get to know you better</h3>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-4">
+                <span class="fa-stack fa-4x">
+                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                    <i class="fa fa-cutlery fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="service-heading">Please select your nutritional Preferences:</h4>
+                <p class="text-muted">
+                    <selectpicker data-array="preferences" data-model="selectedNutritionalPreferences"></selectpicker>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <span class="fa-stack fa-4x">
+                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                    <i class="fa fa-exclamation fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="service-heading">Please select your personal allergies:</h4>
+                <p class="text-muted">
+                    <selectpicker data-array="allergies" data-model="selectedAllergies"></selectpicker>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <span class="fa-stack fa-4x">
+                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                    <i class="fa fa-tint fa-stack-1x fa-inverse"></i>
+                </span>
+                <h4 class="service-heading">
+                Get blood tests results
+                
+                </h4>
+                <button ng-click="getBloodTests()" class="btn btn-xl"> Get! </button>
+                <br />
+                <div id="bloodTestsTable" ng-show="hasReceivedBloodTests === true">
+                    <p class="text-muted">
+                        <h4> Your blood tests results:</h4>
+                        <table class="table">
+                            <thead>
+                                <tr id="tableHeaders">
+                                    <th>Element</th>
+                                    <th>Value</th>
+                                    <th>Range</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="x in bloodElements">
+                                    <td>{{ x.name }}</td>
+                                    <td>{{ x.value }}</td>
+                                    <td>{{ x.range }}</td>
 
-    <div id="bloodTestsTable" ng-show="hasReceivedBloodTests === true">
-        <h2> Your blood tests results:</h2>
-        <table>
-            <tr id="tableHeaders">
-                <td>Element</td>
-                <td>Range</td>
-                <td>Value</td>
-            </tr>
-            <tr ng-repeat="x in bloodElements">
-                <td>{{ x.name }}</td>
-                <td>{{ x.range }}</td>
-                <td>{{ x.value }}</td>
-            </tr>
-        </table>
-    </div>
-</div>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </p>
+                    </div>
+               
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <button ng-click="createMenu()" class="btn btn-xl"> create my menu</button>
+            </div>
+        </div>
+        
+        </div>
+</section>

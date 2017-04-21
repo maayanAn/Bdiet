@@ -1,48 +1,94 @@
-﻿<div>
-    <h2>Menu</h2>
-
-    <form class="form-horizontal">
-        <table>
-            <tr>
-                <th>
-                    Breakfast:
-                </th>
-                <td>
-                    {{breakfast}}
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    Morning Snack:
-                </th>
-                <td>
-                    {{morningSnack}}
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    Lunch:
-                </th>
-                <td>
-                    {{lunch}}
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    Afternoon Snack:
-                </th>
-                <td>
-                    {{afternoonSnack}}
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    Dinner:
-                </th>
-                <td>
-                    {{dinner}}
-                </td>
-            </tr>
-        </table>
-    </form>
-</div>
+﻿<section id="menu">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">Menu</h2>
+                <h3 class="section-subheading text-muted">Your personal menu - designed just for you</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="timeline">
+                    <li>
+                        <div class="timeline-image">
+                            <img class="img-circle img-responsive" src="img/about/1.jpg" alt="">
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4>Breakfast</h4>
+                                <h4 class="subheading">7:00-9:00</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p class="text-muted">{{breakfast}}</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-inverted">
+                        <div class="timeline-image">
+                            <img class="img-circle img-responsive" src="img/about/2.jpg" alt="">
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4>Morning Snack</h4>
+                                <h4 class="subheading">10:00-11:00</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p class="text-muted">{{morningSnack}}</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="timeline-image">
+                            <img class="img-circle img-responsive" src="img/about/3.jpg" alt="">
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4>Lunch</h4>
+                                <h4 class="subheading">12:00-14:00</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p class="text-muted">{{lunch}}</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-inverted">
+                        <div class="timeline-image">
+                            <img class="img-circle img-responsive" src="img/about/4.jpg" alt="">
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4>Afternoon Snack</h4>
+                                <h4 class="subheading">15:00-17:00</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p class="text-muted">{{afternoonSnack}}</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="timeline-image">
+                            <img class="img-circle img-responsive" src="img/about/3.jpg" alt="">
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4>Dinner</h4>
+                                <h4 class="subheading">19:00-21:00</h4>
+                            </div>
+                            <div class="timeline-body">
+                                <p class="text-muted">{{dinner}}</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-inverted">
+                        <div class="timeline-image">
+                            <h4>
+                                Bon
+                                <br>Appetit
+                            </h4>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
