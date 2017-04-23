@@ -112,6 +112,7 @@
     <Content Include="img\about\2.jpg" />
     <Content Include="img\about\3.jpg" />
     <Content Include="img\about\4.jpg" />
+    <Content Include="img\forks.jpg" />
     <Content Include="img\header-bg.jpg" />
     <Content Include="img\header-bg-prev.jpg" />
     <Content Include="img\map-image.png" />

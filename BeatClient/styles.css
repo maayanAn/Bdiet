@@ -1,3 +1,11 @@
 ﻿td {
     text-align: left;
 }
+footer{
+    width: 45%;
+    height: 400px;
+    margin: auto;
+    background-image: url('../img/forks.jpg');
+    background-size: 100% 100%;
+    
+}
