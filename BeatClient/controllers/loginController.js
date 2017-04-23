@@ -5,6 +5,7 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
     $scope.loginForm = {};
 
     $scope.usersTemp = [{
+        id: 1,
         username: "Yossi",
         password: "123",
         email: "yossi@gmail.com"
@@ -15,18 +16,31 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
 
         for (var i = 0; i < $scope.usersTemp.length && !isFound; i++) {
             if ($scope.loginForm.email == $scope.usersTemp[i].email && $scope.loginForm.password == $scope.usersTemp[i].password) {
-                $rootScope.user = $scope.usersTemp[i].username;
+                $rootScope.user = angular.copy($scope.usersTemp[i]);
                 //$location.path('/personalZone');
-                $location.hash('personalZone');
-                $anchorScroll();
+                $rootScope.$broadcast('userLoggedIn');
+
+                //$location.hash('personal-zone');
+                $anchorScroll('personal-zone');
                 isFound = true;
+                $scope.loginForm = {};
+
             }
         }
 
-        if (!isFound)
-        {
+        if (!isFound) {
             alert('Incorrect E-mail or password');
         }
+    }
+    var getNextId = function () {
+        var id = $scope.usersTemp[0].id;
+        for (var i = 1; i < $scope.usersTemp.length; i++) {
+            if ($scope.usersTemp[i].id > id) {
+                id = $scope.usersTemp[i].id;
+            }
+        }
+
+        return ++id;
     }
 
     $scope.register = function () {
@@ -44,17 +58,23 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
             }
         }
         if (!isFail) {
+            var nextId = getNextId();
             $scope.usersTemp.push({
+                id: nextId,
                 username: $scope.registerForm.username,
                 password: $scope.registerForm.password,
                 email: $scope.registerForm.email
             });
 
-            $rootScope.user = $scope.registerForm.username;
+            $scope.registerForm = {};
+            $rootScope.user = angular.copy($scope.usersTemp[$scope.usersTemp.length - 1]);
             //$location.path('/personalZone');
-            $location.hash('personalZone');
-            $anchorScroll();
+            $rootScope.$broadcast('userLoggedIn');
+            //$location.hash('personal-zone');
+            $anchorScroll('personal-zone');
+
+
         }
-        
+
     }
 });

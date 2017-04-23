@@ -45,24 +45,25 @@
                             <a class="page-scroll" href="#about">About</a>
                         </li>
                         <li>
-                            <a ng-show="user" class="page-scroll" href="#personalZone">Personal Zone</a>
+                            <a ng-show="user" class="page-scroll" href="#personal-zone">Personal Zone</a>
                         </li>
                         <li>
                             <a ng-show="user" class="page-scroll" href="#menu">Menu</a>
+                        </li>
+                        
+                        <li>
+                            <a ng-show="!user" class="page-scroll" href="#login">
+                                <span class="glyphicon glyphicon-log-in"></span> Login
+                            </a>
                         </li>
                         <li>
                             <a ng-show="!user" class="page-scroll" href="#register">
                                 <span class="glyphicon glyphicon-user"></span> Sign Up
                             </a>
                         </li>
-                        <li>
-                            <a ng-show="!user" class="page-scroll" href="#login">
-                                <span class="glyphicon glyphicon-log-in"></span> Login
-                            </a>
-                        </li>
                         <li ng-show="user">
-                            <a class="page-scroll">
-                                <span class="glyphicon glyphicon-user"></span>Welcome {{user}}
+                            <a class="page-scroll" ng-click="logout()">
+                                <span class="glyphicon glyphicon-user"></span>Welcome {{user.username}}, Log out
                             </a>
                         </li>
                     </ul>
@@ -91,7 +92,7 @@
                         <h3 class="section-subheading text-muted">What B-eat is all about</h3>
                     </div>
                 </div>
-                </div>
+            </div>
         </section>
 
         <login ng-hide="user"></login>
@@ -107,7 +108,6 @@
 
     <!-- App -->
     <script src="app.js"></script>
-    <script src="controllers/homePageController.js"></script>
     <script src="controllers/loginController.js"></script>
     <script src="controllers/menuController.js"></script>
     <script src="controllers/personalZoneController.js"></script>
@@ -115,7 +115,7 @@
     <script src="directives/registerDirective.js"></script>
     <script src="directives/personalZoneDirective.js"></script>
     <script src="directives/menuDirective.js"></script>
-    
+
     <!-- jQuery -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->

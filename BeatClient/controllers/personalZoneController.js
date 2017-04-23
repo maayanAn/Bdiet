@@ -1,6 +1,6 @@
 var beatApp = angular.module('beatApp');
 
-beatApp.controller('personalZoneController', function personalZoneController($scope, $location, $anchorScroll) {
+beatApp.controller('personalZoneController', function personalZoneController($scope, $rootScope, $location, $anchorScroll) {
     $scope.hasReceivedBloodTests = false;
     $scope.preferences = [
         { name: "none" },
@@ -32,6 +32,7 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
         } else {
             //redirect to menu page
             //$location.path("/menu");
+            $rootScope.$broadcast('calcMenu');
             $location.hash('menu');
             $anchorScroll();
         }
