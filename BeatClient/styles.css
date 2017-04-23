@@ -9,3 +9,7 @@ footer{
     background-size: 100% 100%;
     
 }
+
+section#login {
+    padding-bottom: 0;
+}
