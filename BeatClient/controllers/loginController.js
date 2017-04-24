@@ -1,4 +1,4 @@
-﻿var beatApp = angular.module('beatApp');
+var beatApp = angular.module('beatApp');
 
 beatApp.controller('loginController', function loginController($scope, $rootScope, $location, $anchorScroll) {
     $scope.registerForm = {};
@@ -29,7 +29,7 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
         }
 
         if (!isFound) {
-            alert('Incorrect E-mail or password');
+            swal("Error", "Incorrect E-mail or password", "error");
         }
     }
     var getNextId = function () {
@@ -47,13 +47,13 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
         var isFail = false;
 
         if ($scope.registerForm.password != $scope.registerForm.variPassword) {
-            alert('Password not the same');
+            swal("Error", "Password not the same", "error");
             isFail = true;
         }
 
         for (var i = 0; i < $scope.usersTemp.length && !isFail; i++) {
             if ($scope.registerForm.email == $scope.usersTemp[i].email) {
-                alert('E-mail address already in use');
+                swal("Error", "E-mail address already in use", "error");
                 isFail = true;
             }
         }
