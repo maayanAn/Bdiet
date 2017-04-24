@@ -13,3 +13,11 @@ footer{
 section#login {
     padding-bottom: 0;
 }
+.logo{
+      font-family: "Kaushan Script", "Helvetica Neue", Helvetica, Arial, cursive;
+      font-size:x-large;      
+}
+.fruitPic{
+    height:160px;
+    width: 160px;
+}
