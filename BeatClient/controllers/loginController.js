@@ -18,6 +18,9 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
             if ($scope.loginForm.email == $scope.usersTemp[i].email && $scope.loginForm.password == $scope.usersTemp[i].password) {
                 $rootScope.user = angular.copy($scope.usersTemp[i]);
                 //$location.path('/personalZone');
+                
+                swal("Hi " + $rootScope.user.username, "You logged in successfuly", "success");
+                
                 $rootScope.$broadcast('userLoggedIn');
 
                 //$location.hash('personal-zone');
@@ -68,6 +71,9 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
 
             $scope.registerForm = {};
             $rootScope.user = angular.copy($scope.usersTemp[$scope.usersTemp.length - 1]);
+            
+            swal("Hi " + $rootScope.user.username, "Welcome to B-eat!", "success");
+            
             //$location.path('/personalZone');
             $rootScope.$broadcast('userLoggedIn');
             //$location.hash('personal-zone');

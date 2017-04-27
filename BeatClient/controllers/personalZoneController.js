@@ -39,7 +39,7 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
     };
 
     $scope.getBloodTests = function () {
-        alert("connecting with your health services, this might take a few seconds..")
+        swal("Blood Tests", "connecting with your health services, this might take a few seconds..", "info");
         // get users blood tests results in xml format
         $scope.hasReceivedBloodTests = true;
 
