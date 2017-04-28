@@ -21,3 +21,15 @@ section#login {
     height:160px;
     width: 160px;
 }
+
+.timeline > li .timeline-image {
+    border: 7px solid #ffffff;
+}
+
+.timeline:before {
+    background-color: #ffffff;
+}
+
+menu {
+    padding: 0;
+}
