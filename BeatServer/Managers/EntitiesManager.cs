@@ -1,5 +1,6 @@
 ﻿using BeatServer.Models;
 using NHibernate;
+using NHibernate.Criterion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,25 +24,28 @@ namespace BeatServer.Managers
 
         private EntitiesManager()
         {
-            UsersTemp = new List<User>();
-            User u = new User();
-            u.user_id = 1;
-            u.name = "Yossi";
-            u.password = "123";
-            u.email = "yossi@gmail.com";
-            UsersTemp.Add(u);
         }
 
         #region login
-
-        private List<User> UsersTemp;
+       
         
         public IEnumerable<User> GetUsers()
         {
             using (var session = NHibernateManager.OpenSession())
             {
-                ICriteria criteria = session.CreateCriteria<User>();
-                return criteria.List<User>();
+                IList<User> users = session.CreateCriteria<User>().List<User>();
+                IList<int> l = users[0].AllergiesIdList;
+                l.Add(1);
+                users[0].AllergiesIdList = l;
+
+                IList<Preference> preferences = session.CreateCriteria<Preference>().List<Preference>();
+                IList<Allergy> allergies = session.CreateCriteria<Allergy>().List<Allergy>();
+                IList<Mealtype> mealtypes = session.CreateCriteria<Mealtype>().List<Mealtype>();
+                IList<Foodgroup> foodgroup = session.CreateCriteria<Foodgroup>().List<Foodgroup>();
+                IList<Menu> menues = session.CreateCriteria<Menu>().List<Menu>();
+                IList<Nutrient> nutrients = session.CreateCriteria<Nutrient>().List<Nutrient>();
+                IList<Food> food = session.CreateCriteria<Food>().List<Food>();
+                return users;
             }
         }
 
@@ -49,49 +53,49 @@ namespace BeatServer.Managers
         {
             User ret = null;
 
-            foreach (User item in UsersTemp)
+            using (var session = NHibernateManager.OpenSession())
             {
-                if (item.email == details.email && item.password == details.password)
+                IList<User> lst = session.CreateCriteria<User>()
+                    .Add(Expression.And(Expression.Eq("Email", details.email), Expression.Eq("Password", details.password)))
+                    .List<User>();
+
+                if (lst.Count > 0)
                 {
-                    ret = item;
+                    ret = lst.First();
                 }
             }
-
+            
             return ret;
         }
 
-        private int getNextId()
-        {
-            int id = 0;
-            for (int i = 0; i < UsersTemp.Count; i++)
-            {
-                if (UsersTemp[i].user_id > id)
-                {
-                    id = UsersTemp[i].user_id;
-                }
-            }
-
-            return ++id;
-        }
         public User Register(User details)
         {
             User ret = null;
-            bool exists = false;
 
-            foreach (User item in UsersTemp)
+            using (var session = NHibernateManager.OpenSession())
             {
-                if (item.email == details.email)
+                IList<User> lst = session.CreateCriteria<User>()
+                    .Add(Expression.Eq("Email", details.Email))
+                    .List<User>();
+
+                // if the email isn't in use save the new user
+                if (lst.Count == 0)
                 {
-                    exists = true;
+                    using (var transaction = session.BeginTransaction())
+                    {
+                        try
+                        {
+                            ret = details;
+                            session.Save(ret);
+                            transaction.Commit();
+                        }
+                        catch (Exception e)
+                        {
+
+                            transaction.Rollback();
+                        }
+                    }
                 }
-            }
-
-            if (!exists)
-            {
-                ret = details;
-                ret.user_id = getNextId();
-                UsersTemp.Add(ret);
-
             }
 
             return ret;

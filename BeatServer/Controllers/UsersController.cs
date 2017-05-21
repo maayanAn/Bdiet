@@ -46,7 +46,7 @@ namespace BeatServer.Controllers
                 return BadRequest("Email already in use");
             }
 
-            return CreatedAtRoute("Default", new { id = u.user_id }, u);
+            return CreatedAtRoute("Default", new { id = u.UserId }, u);
         }
 
         //// PUT: api/Users/5

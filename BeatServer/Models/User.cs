@@ -5,6 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using FluentNHibernate.Mapping;
+using BeatServer.Managers;
 
 namespace BeatServer.Models
 {
@@ -13,33 +14,68 @@ namespace BeatServer.Models
     {
         [Key]
         [DataMember]
-        public virtual int user_id { get; set; }
+        public virtual int UserId { get; set; }
 
         [Required]
         [DataMember]
-        public virtual string email { get; set; }
+        public virtual string Email { get; set; }
 
         [Required]
         [DataMember]
-        public virtual string name { get; set; }
+        public virtual string Name { get; set; }
 
         [Required]
         [DataMember]
-        public virtual string password { get; set; }
+        public virtual string Password { get; set; }
+
+
+        [Required]
+        [DataMember]
+        public virtual string Allergies { get; set; }
+
+        public virtual IList<int> AllergiesIdList
+        {
+            get
+            {
+                return Utils.CommaSeparatedStringToIntList(Allergies);
+            }
+            set
+            {
+                Allergies = string.Join(",", value);
+            }
+        }
+
+        [Required]
+        [DataMember]
+        public virtual string Preferences { get; set; }
+
+        public virtual IList<int> PreferencesIdList
+        {
+            get
+            {
+                return Utils.CommaSeparatedStringToIntList(Preferences);
+            }
+            set
+            {
+                Preferences = string.Join(",", value);
+            }
+        }
     }
 
     public class UserMap : ClassMap<User>
     {
         public UserMap()
         {
-            Table("tb_users");
+            Table("users");
 
-            Id(x => x.user_id).GeneratedBy.Identity();
+            Id(x => x.UserId).GeneratedBy.Identity();
 
-            Map(x => x.email);
-            Map(x => x.name);
-            Map(x => x.password);
-
+            Map(x => x.Email);
+            Map(x => x.Name);
+            Map(x => x.Password);
+            Map(x => x.Allergies);
+            Map(x => x.Preferences);
+            
         }
     }
 

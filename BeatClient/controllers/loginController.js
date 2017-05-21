@@ -23,7 +23,7 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
             // when the response is available
             console.log(response);
             $rootScope.user = angular.copy(response.data);
-            swal("Hi " + $rootScope.user.name, "You logged in successfuly", "success");
+            swal("Hi " + $rootScope.user.Name, "You logged in successfuly", "success");
 
             $rootScope.$broadcast('userLoggedIn');
 
@@ -52,9 +52,9 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
                     'Access-Control-Allow-Origin': '*'
                 },
                 data: {
-                    "name": $scope.registerForm.username,
-                    "password": $scope.registerForm.password,
-                    "email": $scope.registerForm.email
+                    "Name": $scope.registerForm.username,
+                    "Password": $scope.registerForm.password,
+                    "Email": $scope.registerForm.email
                 }
             }
 
@@ -63,7 +63,7 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
                 // when the response is available
                 console.log(response);
                 $rootScope.user = angular.copy(response.data);
-                swal("Hi " + $rootScope.user.name, "Welcome to B-eat!", "success");
+                swal("Hi " + $rootScope.user.Name, "Welcome to B-eat!", "success");
 
                 $rootScope.$broadcast('userLoggedIn');
 

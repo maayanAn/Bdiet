@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeatServer", "BeatServer\BeatServer.csproj", "{4425CCC1-F6EF-4E97-88AE-2F5469D22470}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeatClient", "BeatClient\BeatClient.csproj", "{C557F327-0936-4A23-B259-560030F3B760}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeatServer", "BeatServer\BeatServer.csproj", "{28DC1B55-3707-4DD0-8399-73597DA03C5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4425CCC1-F6EF-4E97-88AE-2F5469D22470}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4425CCC1-F6EF-4E97-88AE-2F5469D22470}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4425CCC1-F6EF-4E97-88AE-2F5469D22470}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4425CCC1-F6EF-4E97-88AE-2F5469D22470}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C557F327-0936-4A23-B259-560030F3B760}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C557F327-0936-4A23-B259-560030F3B760}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C557F327-0936-4A23-B259-560030F3B760}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C557F327-0936-4A23-B259-560030F3B760}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28DC1B55-3707-4DD0-8399-73597DA03C5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28DC1B55-3707-4DD0-8399-73597DA03C5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28DC1B55-3707-4DD0-8399-73597DA03C5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28DC1B55-3707-4DD0-8399-73597DA03C5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -17,7 +17,7 @@ namespace BeatServer.Controllers
         // GET: api/Login
         public IEnumerable<string> Get()
         {
-            EntitiesManager.getInstance().GetUsers();
+            IEnumerable<User> lat = EntitiesManager.getInstance().GetUsers();
             return new string[] { "value1", "value2" };
         }
 
@@ -55,7 +55,7 @@ namespace BeatServer.Controllers
                 return BadRequest("Invalid email or password");
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = u.user_id }, u);
+            return CreatedAtRoute("DefaultApi", new { id = u.UserId }, u);
         }
 
         //// POST: api/Login/Register
