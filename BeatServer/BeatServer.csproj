@@ -92,10 +92,13 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
+    <Content Include="xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BloodTestsResultsController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PersonalZoneController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -105,12 +108,14 @@
     <Compile Include="Managers\NHibernateManager.cs" />
     <Compile Include="Managers\Utils.cs" />
     <Compile Include="Models\Allergy.cs" />
+    <Compile Include="Models\BloodTest.cs" />
     <Compile Include="Models\Food.cs" />
     <Compile Include="Models\FoodGroup.cs" />
     <Compile Include="Models\LoginUser.cs" />
     <Compile Include="Models\MealType.cs" />
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\Nutrient.cs" />
+    <Compile Include="Models\PersonalZone.cs" />
     <Compile Include="Models\Preference.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

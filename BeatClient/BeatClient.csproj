@@ -116,7 +116,9 @@
     <Content Include="img\forks.jpg" />
     <Content Include="img\header-bg.jpg" />
     <Content Include="img\header-bg-prev.jpg" />
+    <Content Include="img\leftReg.jpg" />
     <Content Include="img\map-image.png" />
+    <Content Include="img\rightReg.jpg" />
     <Content Include="js\agency.js" />
     <Content Include="js\agency.min.js" />
     <Content Include="js\contact_me.js" />

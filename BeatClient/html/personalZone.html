@@ -14,7 +14,7 @@
                 </span>
                 <h4 class="service-heading">Please select your nutritional Preferences:</h4>
                 <p class="text-muted">
-                    <selectpicker data-array="preferences" data-model="selectedNutritionalPreferences"></selectpicker>
+                    <selectpicker ng-change="selectpickerChanged" data-array="preferences" data-model="selectedNutritionalPreferences"></selectpicker>
                 </p>
             </div>
             <div class="col-md-4">
@@ -24,7 +24,7 @@
                 </span>
                 <h4 class="service-heading">Please select your personal allergies:</h4>
                 <p class="text-muted">
-                    <selectpicker data-array="allergies" data-model="selectedAllergies"></selectpicker>
+                    <selectpicker ng-change="selectpickerChanged" data-array="allergies" data-model="selectedAllergies"></selectpicker>
                 </p>
             </div>
             <div class="col-md-4">
@@ -46,14 +46,20 @@
                                 <tr id="tableHeaders">
                                     <th>Element</th>
                                     <th>Value</th>
+                                    <th>Min value</th>
+                                    <th>Max value</th>
                                     <th>Range</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="x in bloodElements">
-                                    <td>{{ x.name }}</td>
+                                    <td>{{ x.component_name_english }}</td>
                                     <td>{{ x.value }}</td>
-                                    <td>{{ x.range }}</td>
+                                    <td>{{ x.min_val }}</td>
+                                    <td>{{ x.max_val }}</td>
+                                    <td>
+                                        <input type="range" min={{x.min_val}} max={{x.max_val}} disabled="disabled" value={{x.value}} />
+                                    </td>
 
                                 </tr>
                             </tbody>
