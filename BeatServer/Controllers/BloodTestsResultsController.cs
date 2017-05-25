@@ -11,8 +11,9 @@ namespace BeatServer.Controllers
     [RoutePrefix("api/BloodTestsResults")]
     public class BloodTestsResultsController : ApiController
     {
-        List<BloodTest> contents = new List<BloodTest>();
-        public List<BloodTest> getBloodTestsResults(User u)
+        public List<BloodTest> contents = new List<BloodTest>();
+
+        public List<BloodTest> getBloodTestsResults()
         {
             var path = HttpContext.Current.Server.MapPath(@"~/xml/test.xml");
             XmlTextReader reader = new XmlTextReader(path);

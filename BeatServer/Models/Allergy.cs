@@ -8,9 +8,22 @@ using FluentNHibernate.Mapping;
 
 namespace BeatServer.Models
 {
+    //[DataContract]
+    //public class Allergy : PresonalZoneListItem
+    //{
+    //    //[Key]
+    //    //[DataMember]
+    //    //public virtual int Id;
+    //    //public override int Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+    //    //public override string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+
+    //}
     [DataContract]
     public class Allergy
     {
+
         [Key]
         [DataMember]
         public virtual int Id { get; set; }
@@ -18,6 +31,7 @@ namespace BeatServer.Models
         [Required]
         [DataMember]
         public virtual string Name { get; set; }
+
     }
 
     public class AllergyMap : ClassMap<Allergy>

@@ -11,6 +11,8 @@ namespace BeatServer.Managers
     public class EntitiesManager
     {
         private static EntitiesManager m_instance;
+        public static Dictionary<string, int> allergyArray;
+        public static Dictionary<string, int> preferenceArray;
 
         public static EntitiesManager getInstance()
         {
@@ -27,8 +29,8 @@ namespace BeatServer.Managers
         }
 
         #region login
-       
-        
+
+
         public IEnumerable<User> GetUsers()
         {
             using (var session = NHibernateManager.OpenSession())
@@ -64,7 +66,7 @@ namespace BeatServer.Managers
                     ret = lst.First();
                 }
             }
-            
+
             return ret;
         }
 
@@ -91,7 +93,8 @@ namespace BeatServer.Managers
                         }
                         catch (Exception e)
                         {
-
+                            List<Exception> list = new List<Exception>();
+                            list.Add(e);
                             transaction.Rollback();
                         }
                     }
@@ -101,6 +104,103 @@ namespace BeatServer.Managers
             return ret;
         }
 
+        public User GetUser(int id)
+        {
+            User ret = null;
+
+            using (var session = NHibernateManager.OpenSession())
+            {
+                IList<User> lst = session.CreateCriteria<User>()
+                    .Add(Expression.Eq("UserId", id))
+                    .List<User>();
+
+                if (lst.Count == 1)
+                {
+                    ret = lst.First();
+                }
+            }
+            return ret;
+        }
+        #endregion
+
+        #region PersonalZone
+        public IList<Allergy> GetAllergies()
+        {
+            using (var session = NHibernateManager.OpenSession())
+            {
+                IList<Allergy> allergies = session.CreateCriteria<Allergy>().List<Allergy>();
+                return allergies;
+            }
+        }
+
+        public IList<Preference> GetPreferences()
+        {
+            using (var session = NHibernateManager.OpenSession())
+            {
+                IList<Preference> preferences = session.CreateCriteria<Preference>().List<Preference>();
+                return preferences;
+            }
+        }
+
+
+        public User UpdateUsersZone(PersonalZone details)
+        {
+            User ret = GetUser(details.userId);
+
+            using (var session = NHibernateManager.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    ret.Allergies = ConvertOptionNameToId(details.userAllergies, allergyArray);
+                    ret.Preferences = ConvertOptionNameToId(details.userPreferences, preferenceArray);
+                    try
+                    {                        
+                        session.Update(ret);
+                        //session.Update("Preferences", ret.Preferences, details.userId);
+                        transaction.Commit();
+                    }
+                    catch (Exception e)
+                    {
+                        transaction.Rollback();
+                    }
+                }
+            }
+            return ret;
+        }
+
+
+        public void ListToItemArray(PersonalZoneLists lists)
+        {
+            allergyArray = new Dictionary<string, int>();
+            allergyArray["None"] = 0;
+            foreach (var item in lists.allergiesList)
+            {
+                allergyArray[item.Name] = item.Id;
+            }
+
+            preferenceArray = new Dictionary<string, int>();
+            preferenceArray["None"] = 0;
+            foreach (var item in lists.preferencesList)
+            {
+                preferenceArray[item.Name] = item.Id;
+            }
+        }
+
+        public string ConvertOptionNameToId(List<string> userItems, Dictionary<string, int> generalArray)
+        {
+            string stringIds = "";
+            foreach (var item in userItems)
+            {
+                stringIds += generalArray[item] + ",";
+            }
+
+            if (string.Empty != stringIds)
+            {
+                char[] MyChar = { ',' };
+                stringIds = stringIds.TrimEnd(MyChar);
+            }
+            return stringIds;
+        }
         #endregion
     }
 }

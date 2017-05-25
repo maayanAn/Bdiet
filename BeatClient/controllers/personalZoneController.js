@@ -3,40 +3,38 @@ var beatApp = angular.module('beatApp');
 beatApp.controller('personalZoneController', function personalZoneController($scope, $rootScope, $location, $anchorScroll, $http) {
     $scope.hasReceivedBloodTests = false;
 
-    var js = [];
-    js2 = [];
+    var generalAllergies = [];
+    generalPreferences = [];
     $(function (ngModelCtrl) {
         $http({
             method: 'GET',
             url: 'http://localhost:51149/api/PersonalZone'
         }).then(function successCallback(response) {
-            // this callback will be called asynchronously
-            // when the response is available
-
-            var t1 = (response.data[0]).split(',');
-            var t2 = (response.data[1]).split(',');
-            for (i = 0; i < t1.length; i++) {
-                js.push({ name: t1[i] });
+             //this callback will be called asynchronously
+             //when the response is available
+            var allergyList = response.data.allergiesList;
+            var preferenceList = response.data.preferencesList;
+            for (i = 0; i < allergyList.length; i++) {
+                generalAllergies.push({ name: allergyList[i].Name });
             }
-            for (i = 0; i < t2.length; i++) {
-                js2.push({ name: t2[i] });
+            for (i = 0; i < preferenceList.length; i++) {
+                generalPreferences.push({ name: preferenceList[i].Name });
             }
 
-            a(js, js2);
+            $scope.allergies = generalAllergies;
+            $scope.preferences = generalPreferences;
 
         }, function errorCallback(response) {
             // called asynchronously if an error occurs
             // or server returns response with an error status.
+            js.push({ name: "None" });
+            js2.push({ name: "None" });
         });
-        function a(js1, js2) {
-            $scope.allergies = js1;
-            $scope.preferences = js2;
-        }
     });
 
 
     CheckValidLists = function () {
-        var noneList = ["none"];
+        var noneList = ["None"];
         if ($scope.selectedAllergies == null)
             $scope.selectedAllergies = noneList;
         if ($scope.selectedNutritionalPreferences == null)
@@ -60,7 +58,7 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
                 data: {
                     "userAllergies": $scope.selectedAllergies,
                     "userPreferences": $scope.selectedNutritionalPreferences,
-                    "userId": "0"
+                    "userId": $rootScope.user.UserId
                 }
             }
 
@@ -68,11 +66,11 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
                 // this callback will be called asynchronously
                 // when the response is available
                 console.log(response);
+                $rootScope.user = angular.copy(response.data);
                 $rootScope.$broadcast('calcMenu');
 
-                //$location.hash('menu');
                 $anchorScroll('menu');
-                $scope.loginForm = {};
+//                $scope.loginForm = {};
             }, function errorCallback(response) {
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
@@ -86,17 +84,19 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
         if (!$scope.hasReceivedBloodTests) {
             swal("Blood Tests", "connecting with your health services, this might take a few seconds..", "info");
 
-
-            $(function () {
-                var result = $.getJSON('http://localhost:51149/api/BloodTestsResults', function (bloodTestResponse) {
-                    $scope.bloodElements = bloodTestResponse;
-                });
-
-                result.complete(function () {
-                    $scope.hasReceivedBloodTests = true;
-                })
+            $http({
+                method: 'GET',
+                url: 'http://localhost:51149/api/BloodTestsResults'
+            }).then(function successCallback(response) {
+                $scope.bloodElements = response.data;
+                $scope.hasReceivedBloodTests = true;
+            }, function errorCallback(response) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                    console.log(response);
+                    swal("Error", "Please try again later", "error");
             });
-        }
+        }        
     };
 });
 
