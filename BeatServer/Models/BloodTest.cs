@@ -13,7 +13,7 @@ namespace BeatServer.Models
     {
         public virtual string component_name_english { get; set; }
 
-        public virtual string value { get; set; }
+        public virtual int value { get; set; }
 
         public virtual int min_val { get; set; }
 

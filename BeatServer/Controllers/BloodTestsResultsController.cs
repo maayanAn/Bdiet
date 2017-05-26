@@ -5,6 +5,7 @@ using System.Web;
 using System.Xml;
 using BeatServer.Models;
 using System.Web.Http;
+using BeatServer.Managers;
 
 namespace BeatServer.Controllers
 {
@@ -15,11 +16,13 @@ namespace BeatServer.Controllers
 
         public List<BloodTest> getBloodTestsResults()
         {
+            int userId;
             var path = HttpContext.Current.Server.MapPath(@"~/xml/test.xml");
             XmlTextReader reader = new XmlTextReader(path);
             try
             {
                 BloodTest bt = new BloodTest();
+                List<int> lacksList = new List<int>();
                 while (reader.Read())
                 {
                     string temp = "";
@@ -30,7 +33,7 @@ namespace BeatServer.Controllers
                     if (reader.NodeType == XmlNodeType.Element)
                     {
                         if (temp == "VALUE")
-                            bt.value = reader.ReadString();
+                            bt.value = int.Parse(reader.ReadString());
                         else if (temp == "COMPONENT_ENGLISH_NAME")
                             bt.component_name_english = reader.ReadString();
                         else if (temp == "MIN_VAL")
@@ -39,16 +42,40 @@ namespace BeatServer.Controllers
                         {
                             bt.max_val = int.Parse(reader.ReadString());
                             contents.Add(bt);
+
+                            if (bt.value < bt.min_val)
+                            {
+                                int NutrientId = EntitiesManager.getInstance().GetNutrientIdByName(bt.component_name_english);
+
+                                if (NutrientId != -1)
+                                {
+                                    lacksList.Add(NutrientId);
+                                }
+                                
+                            }
+                            else if(bt.component_name_english == "total cholesterol" && bt.value > bt.max_val)
+                            {
+                                int NutrientId = EntitiesManager.getInstance().GetNutrientIdByName(bt.component_name_english);
+
+                                if (NutrientId != -1)
+                                {
+                                    lacksList.Add(NutrientId);
+                                }
+                            }
+
                             bt = new BloodTest();
                         }
                     }
 
                 }
+
+                EntitiesManager.getInstance().SaveBloodResultsLacks(lacksList, userId);
             }
             catch (Exception ex)
             {
                 //add an exeption to the result
             }
+            
             return contents;
         }
 

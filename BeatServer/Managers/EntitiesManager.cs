@@ -201,6 +201,80 @@ namespace BeatServer.Managers
             }
             return stringIds;
         }
+
+        public void SaveBloodResultsLacks(List<int> lacks, int userId)
+        {
+            using (var session = NHibernateManager.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    try
+                    {
+                        User user = GetUser(userId);
+                        user.NutrientLacksList = lacks;
+                        session.Update(user);
+                        transaction.Commit();
+                    }
+                    catch (Exception e)
+                    {
+                        List<Exception> list = new List<Exception>();
+                        list.Add(e);
+                        transaction.Rollback();
+                    }
+                }
+                
+            }
+        }
+
+        public int GetNutrientIdByName(string name)
+        {
+            int ret = -1;
+
+            using (var session = NHibernateManager.OpenSession())
+            {
+                IList<Nutrient> lst = session.CreateCriteria<Nutrient>()
+                    .Add(Expression.Eq("Name", name))
+                    .List<Nutrient>();
+
+                if (lst.Count == 1)
+                {
+                    ret = lst.First().Id;
+                }
+            }
+            return ret;
+        }
+        #endregion
+
+        #region Meal generator
+
+        public List<Food> GetFoods(int NumOfFoods, MealTypes mainType)
+        {
+            using (var session = NHibernateManager.OpenSession())
+            {
+                List<Food> result = new List<Food>();
+
+                IList<Food> foodList = session.CreateCriteria<Food>()
+                    .Add(Expression.Or(Expression.Eq("MealType", mainType), Expression.Eq("MealType", MealTypes.Everything)))
+                    .List<Food>();
+
+                if (foodList.Count > 0)
+                {
+                    Random Rand = new Random();
+
+                    for (int i = 0; i < NumOfFoods; i++)
+                    {
+                        int ChosenIndex = Rand.Next(0, foodList.Count - 1);
+
+                        result.Add(foodList[ChosenIndex]);
+                    }
+                }
+
+                return result;
+            }
+
+            
+        }
+
         #endregion
     }
 }

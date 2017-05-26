@@ -11,6 +11,27 @@ namespace BeatServer.Models
     [DataContract]
     public class Menu
     {
+        public Menu()
+        {
+
+        }
+
+        public Menu(Meal Breakfast, Meal MidMorning, Meal Lunch, Meal Afternoon, Meal Dinner)
+        {
+            this.Breakfast = Breakfast.ToString();
+            this.MidMorning = MidMorning.ToString();
+            this.Lunch = Lunch.ToString();
+            this.Afternoon = Afternoon.ToString();
+            this.Dinner = Dinner.ToString();
+
+            MealList = new List<Meal>();
+            MealList.Add(Breakfast);
+            MealList.Add(MidMorning);
+            MealList.Add(Lunch);
+            MealList.Add(Afternoon);
+            MealList.Add(Dinner);
+        }
+
         [Key]
         [DataMember]
         public virtual int MenuId { get; set; }
@@ -38,6 +59,10 @@ namespace BeatServer.Models
         [Required]
         [DataMember]
         public virtual string Dinner { get; set; }
+
+        public virtual List<Meal> MealList { get; set; }
+
+        public virtual int Score { get; set; }
     }
 
     public class MenuMap : ClassMap<Menu>

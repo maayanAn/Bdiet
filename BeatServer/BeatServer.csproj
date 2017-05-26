@@ -101,10 +101,14 @@
     <Compile Include="Controllers\PersonalZoneController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Genetic algorithm\GeneticAlgorithmGenerator.cs" />
+    <Compile Include="Genetic algorithm\Population.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Globals.cs" />
     <Compile Include="Managers\EntitiesManager.cs" />
+    <Compile Include="Managers\GeneticAllgorithmManager.cs" />
     <Compile Include="Managers\NHibernateManager.cs" />
     <Compile Include="Managers\Utils.cs" />
     <Compile Include="Models\Allergy.cs" />
@@ -112,6 +116,7 @@
     <Compile Include="Models\Food.cs" />
     <Compile Include="Models\FoodGroup.cs" />
     <Compile Include="Models\LoginUser.cs" />
+    <Compile Include="Models\Meal.cs" />
     <Compile Include="Models\MealType.cs" />
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\Nutrient.cs" />

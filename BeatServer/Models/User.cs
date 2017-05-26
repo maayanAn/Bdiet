@@ -60,6 +60,22 @@ namespace BeatServer.Models
                 Preferences = string.Join(",", value);
             }
         }
+
+        [Required]
+        [DataMember]
+        public virtual string NutrientLacks { get; set; }
+
+        public virtual IList<int> NutrientLacksList
+        {
+            get
+            {
+                return Utils.CommaSeparatedStringToIntList(Allergies);
+            }
+            set
+            {
+                Allergies = string.Join(",", value);
+            }
+        }
     }
 
     public class UserMap : ClassMap<User>
