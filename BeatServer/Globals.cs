@@ -33,5 +33,6 @@ namespace BeatServer
         public static int SmallMealFoodCount = 2;
         public static int PopulationSize = 50;
         public static int NumOfGenerations = 50;
+        public static int MutationProbability = 5;
     }
 }

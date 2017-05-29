@@ -11,9 +11,17 @@ namespace BeatServer.Models
         public List<Food> FoodsList { get; set; }
         public MealTypes Type { get; set; }
 
-        public Meal(int NumOfFoods, MealTypes MainType)
+        public Meal(int NumOfFoods, MealTypes MainType, List<Food> List = null)
         {
-            FoodsList = EntitiesManager.getInstance().GetFoods(NumOfFoods, MainType);
+            if (List ==  null)
+            {
+                FoodsList = EntitiesManager.getInstance().GetFoods(NumOfFoods, MainType);
+            }
+            else
+            {
+                FoodsList = List;
+            }
+            
             Type = MainType;
         }
 

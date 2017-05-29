@@ -16,7 +16,7 @@ namespace BeatServer.Controllers
 
         public List<BloodTest> getBloodTestsResults()
         {
-            int userId;
+            int userId = 0;
             var path = HttpContext.Current.Server.MapPath(@"~/xml/test.xml");
             XmlTextReader reader = new XmlTextReader(path);
             try
