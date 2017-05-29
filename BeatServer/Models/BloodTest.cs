@@ -11,7 +11,7 @@ namespace BeatServer.Models
 
     public class BloodTest
     {
-        public virtual string component_name_english { get; set; }
+        public virtual string name { get; set; }
 
         public virtual int value { get; set; }
 

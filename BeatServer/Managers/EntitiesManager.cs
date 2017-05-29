@@ -155,8 +155,7 @@ namespace BeatServer.Managers
                     ret.Preferences = ConvertOptionNameToId(details.userPreferences, preferenceArray);
                     try
                     {                        
-                        session.Update(ret);
-                        //session.Update("Preferences", ret.Preferences, details.userId);
+                        session.Update(ret);                        
                         transaction.Commit();
                     }
                     catch (Exception e)

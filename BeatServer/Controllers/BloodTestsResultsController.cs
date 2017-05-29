@@ -14,9 +14,9 @@ namespace BeatServer.Controllers
     {
         public List<BloodTest> contents = new List<BloodTest>();
 
-        public List<BloodTest> getBloodTestsResults()
-        {
-            int userId = 0;
+
+        public List<BloodTest> getBloodTestsResults([FromBody]int userId)
+        {            
             var path = HttpContext.Current.Server.MapPath(@"~/xml/test.xml");
             XmlTextReader reader = new XmlTextReader(path);
             try
@@ -34,8 +34,8 @@ namespace BeatServer.Controllers
                     {
                         if (temp == "VALUE")
                             bt.value = int.Parse(reader.ReadString());
-                        else if (temp == "COMPONENT_ENGLISH_NAME")
-                            bt.component_name_english = reader.ReadString();
+                        else if (temp == "NAME")
+                            bt.name = reader.ReadString();
                         else if (temp == "MIN_VAL")
                             bt.min_val = int.Parse(reader.ReadString());
                         else if (temp == "MAX_VAL")
@@ -45,7 +45,7 @@ namespace BeatServer.Controllers
 
                             if (bt.value < bt.min_val)
                             {
-                                int NutrientId = EntitiesManager.getInstance().GetNutrientIdByName(bt.component_name_english);
+                                int NutrientId = EntitiesManager.getInstance().GetNutrientIdByName(bt.name);
 
                                 if (NutrientId != -1)
                                 {
@@ -53,9 +53,9 @@ namespace BeatServer.Controllers
                                 }
                                 
                             }
-                            else if(bt.component_name_english == "total cholesterol" && bt.value > bt.max_val)
+                            else if(bt.name == "total cholesterol" && bt.value > bt.max_val)
                             {
-                                int NutrientId = EntitiesManager.getInstance().GetNutrientIdByName(bt.component_name_english);
+                                int NutrientId = EntitiesManager.getInstance().GetNutrientIdByName(bt.name);
 
                                 if (NutrientId != -1)
                                 {

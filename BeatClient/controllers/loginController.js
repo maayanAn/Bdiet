@@ -40,7 +40,7 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
 
     $scope.register = function () {
 
-        if ($scope.registerForm.password != $scope.registerForm.variPassword) {
+        if ($scope.registerForm.password !== $scope.registerForm.variPassword) {
             swal("Error", "Password not the same", "error");
         }
         else {

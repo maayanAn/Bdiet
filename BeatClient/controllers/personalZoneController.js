@@ -8,7 +8,7 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
     $(function (ngModelCtrl) {
         $http({
             method: 'GET',
-            url: 'http://localhost:51149/api/PersonalZone'
+            url: 'http://localhost:51149/api/PersonalZone'            
         }).then(function successCallback(response) {
              //this callback will be called asynchronously
              //when the response is available
@@ -35,9 +35,9 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
 
     CheckValidLists = function () {
         var noneList = ["None"];
-        if ($scope.selectedAllergies == null)
+        if ($scope.selectedAllergies === undefined)
             $scope.selectedAllergies = noneList;
-        if ($scope.selectedNutritionalPreferences == null)
+        if ($scope.selectedNutritionalPreferences === undefined)
             $scope.selectedNutritionalPreferences = noneList;
     }
 
@@ -86,7 +86,10 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
 
             $http({
                 method: 'GET',
-                url: 'http://localhost:51149/api/BloodTestsResults'
+                url: 'http://localhost:51149/api/BloodTestsResults',
+                data: {
+                    "userId": $rootScope.user.UserId
+                }
             }).then(function successCallback(response) {
                 $scope.bloodElements = response.data;
                 $scope.hasReceivedBloodTests = true;
