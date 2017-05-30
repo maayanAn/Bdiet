@@ -13,10 +13,12 @@ namespace BeatServer.Genetic_algorithm
     {
         public Menu[] Menues { get; set; }
         private int NumOfChildren = 2;
+        private Random rand;
 
         public Population(bool Random= true)
         {
             Menues = new Menu[Globals.PopulationSize];
+            rand = new System.Random();
 
             if (Random)
             {
@@ -54,7 +56,6 @@ namespace BeatServer.Genetic_algorithm
         {
             int ScoresSum = Menues.Sum(x => x.Score);
 
-            Random rand = new Random();
             int randValue = rand.Next(1, ScoresSum);
 
             int Jump = 0;
@@ -118,7 +119,7 @@ namespace BeatServer.Genetic_algorithm
 
         public void MutateByProbability(ref Menu CurrMenu)
         {
-            Random rand = new Random();
+
 
             if (rand.Next(1,100) <= Globals.MutationProbability)
             {

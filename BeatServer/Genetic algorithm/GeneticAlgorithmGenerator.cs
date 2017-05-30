@@ -138,7 +138,7 @@ namespace BeatServer.Genetic_algorithm
                         }
                     case MealTypes.Snack:
                         {
-                            int[] FoodGroupsInMeal = new int[2];
+                            int[] FoodGroupsInMeal = new int[5];
 
                             foreach (Food FoodItem in currMeal.FoodsList)
                             {
@@ -151,6 +151,21 @@ namespace BeatServer.Genetic_algorithm
                                 if (FoodItem.FoodGroup.Id == (int)FoodGroups.Fruits)
                                 {
                                     FoodGroupsInMeal[1] = 1;
+                                }
+                                // carbs
+                                if (FoodItem.FoodGroup.Id == (int)FoodGroups.Carbohydrates)
+                                {
+                                    FoodGroupsInMeal[2] = 1;
+                                }
+                                // cheese
+                                if (FoodItem.FoodGroup.Id == (int)FoodGroups.Cheese)
+                                {
+                                    FoodGroupsInMeal[3] = 1;
+                                }
+                                // cereal
+                                if (FoodItem.FoodGroup.Id == (int)FoodGroups.Cereals)
+                                {
+                                    FoodGroupsInMeal[4] = 1;
                                 }
                             }
 
@@ -199,7 +214,7 @@ namespace BeatServer.Genetic_algorithm
                 {
                     if (foodItem.AllergessIdList.Contains(allergy))
                     {
-                        Score -= 10;
+                        Score -= 3;
                     }
                 }
 
@@ -222,6 +237,10 @@ namespace BeatServer.Genetic_algorithm
                 if (isPreferenceFound)
                 {
                     Score += 2;
+                }
+                else
+                {
+                    Score -= 2;
                 }
 
                 // בדיקת כולסטרול

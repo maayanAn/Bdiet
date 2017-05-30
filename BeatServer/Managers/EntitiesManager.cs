@@ -11,6 +11,7 @@ namespace BeatServer.Managers
     public class EntitiesManager
     {
         private static EntitiesManager m_instance;
+        private static Random Rand;
         public static Dictionary<string, int> allergyArray;
         public static Dictionary<string, int> preferenceArray;
         public static IList<Mealtype> MealTypesList = null;
@@ -28,6 +29,7 @@ namespace BeatServer.Managers
 
         private EntitiesManager()
         {
+            Rand = new Random();
         }
 
         #region login
@@ -262,9 +264,9 @@ namespace BeatServer.Managers
                 Mealtype currMealType = MealTypesList.Where(x => x.Id == (int)mainType).First();
                 IList<Food> foodList;
 
-                //if (!FoodsByMeal.ContainsKey(currMealType))
-                //{
-                    
+                if (!FoodsByMeal.ContainsKey(currMealType))
+                {
+
                     if (mainType == MealTypes.Snack)
                     {
 
@@ -280,17 +282,16 @@ namespace BeatServer.Managers
                         .List<Food>();
                     }
 
-                //    FoodsByMeal[currMealType] = foodList;
-                //}
-                //else
-                //{
-                //    foodList = FoodsByMeal[currMealType];
-                //}
-                
-
-                if (foodList.Count > 0)
+                FoodsByMeal[currMealType] = foodList;
+            }
+                else
                 {
-                    Random Rand = new Random();
+                foodList = FoodsByMeal[currMealType];
+            }
+
+
+            if (foodList.Count > 0)
+                {
 
                     for (int i = 0; i < NumOfFoods; i++)
                     {
