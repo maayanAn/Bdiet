@@ -1,4 +1,5 @@
-﻿using BeatServer.Managers;
+﻿using BeatServer.Genetic_algorithm;
+using BeatServer.Managers;
 using BeatServer.Models;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,12 @@ namespace BeatServer.Controllers
         // GET: api/Login
         public IEnumerable<string> Get()
         {
+            
             IEnumerable<User> lat = EntitiesManager.getInstance().GetUsers();
+
+            GeneticAlgorithmGenerator GA = new GeneticAlgorithmGenerator(lat.First());
+            Menu m = GA.RunAlgorithm();
+
             return new string[] { "value1", "value2" };
         }
 

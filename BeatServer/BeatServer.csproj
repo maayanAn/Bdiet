@@ -108,7 +108,6 @@
     </Compile>
     <Compile Include="Globals.cs" />
     <Compile Include="Managers\EntitiesManager.cs" />
-    <Compile Include="Managers\GeneticAllgorithmManager.cs" />
     <Compile Include="Managers\NHibernateManager.cs" />
     <Compile Include="Managers\Utils.cs" />
     <Compile Include="Models\Allergy.cs" />

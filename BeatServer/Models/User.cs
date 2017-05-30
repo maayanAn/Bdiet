@@ -37,7 +37,14 @@ namespace BeatServer.Models
         {
             get
             {
-                return Utils.CommaSeparatedStringToIntList(Allergies);
+                if (Allergies == null)
+                {
+                    return new List<int>();
+                }
+                else
+                {
+                    return Utils.CommaSeparatedStringToIntList(Allergies);
+                }
             }
             set
             {
@@ -53,7 +60,14 @@ namespace BeatServer.Models
         {
             get
             {
-                return Utils.CommaSeparatedStringToIntList(Preferences);
+                if (Preferences == null)
+                {
+                    return new List<int>();
+                }
+                else
+                {
+                    return Utils.CommaSeparatedStringToIntList(Preferences);
+                }
             }
             set
             {
@@ -69,11 +83,18 @@ namespace BeatServer.Models
         {
             get
             {
-                return Utils.CommaSeparatedStringToIntList(Allergies);
+                if (NutrientLacks == null)
+                {
+                    return new List<int>();
+                }
+                else
+                {
+                    return Utils.CommaSeparatedStringToIntList(NutrientLacks);
+                }
             }
             set
             {
-                Allergies = string.Join(",", value);
+                NutrientLacks = string.Join(",", value);
             }
         }
     }

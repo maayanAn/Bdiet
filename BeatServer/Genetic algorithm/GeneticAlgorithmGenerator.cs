@@ -22,14 +22,18 @@ namespace BeatServer.Genetic_algorithm
 
             for (int j = 1; j < Globals.NumOfGenerations; j++)
             {
-
+                int bla = 1;
                 for (int i = 0; i < population.Menues.Length; i++)
                 {
                     SetCalcFitness(ref population.Menues[i]);
 
                 }
 
-                CurrBestMenu = population.Menues.Where(x => x.Score == population.Menues.Max(y => y.Score)).First();
+                Menu IterationBestMenu = population.Menues.Where(x => x.Score == population.Menues.Max(y => y.Score)).First();
+                if (CurrBestMenu == null || IterationBestMenu.Score > CurrBestMenu.Score)
+                {
+                    CurrBestMenu = IterationBestMenu;
+                }
 
                 if (j != Globals.NumOfGenerations-1)
                 {
@@ -38,6 +42,7 @@ namespace BeatServer.Genetic_algorithm
                 
             }
 
+            CurrBestMenu.User = User;
             return CurrBestMenu;
             
         }
@@ -82,7 +87,15 @@ namespace BeatServer.Genetic_algorithm
                                 }
                             }
 
-                            Score += FoodGroupsInMeal.Sum();
+                            if (FoodGroupsInMeal.Sum() == 3)
+                            {
+                                Score += (FoodGroupsInMeal.Sum() * 3);
+                            }
+                            else
+                            {
+                                Score += FoodGroupsInMeal.Sum();
+                            }
+                            
                             break;
                         }
                     case MealTypes.MorningOrEvening:
@@ -92,9 +105,10 @@ namespace BeatServer.Genetic_algorithm
                             foreach (Food FoodItem in currMeal.FoodsList)
                             {
                                 // protein
-                                if (FoodItem.FoodGroup.Id == (int)FoodGroups.Cheese || 
-                                    FoodItem.FoodGroup.Id == (int)FoodGroups.Eggs || 
-                                    FoodItem.FoodGroup.Id == (int)FoodGroups.Fish)
+                                if (FoodItem.FoodGroup.Id == (int)FoodGroups.Cheese ||
+                                    FoodItem.FoodGroup.Id == (int)FoodGroups.Eggs ||
+                                    FoodItem.FoodGroup.Id == (int)FoodGroups.Fish ||
+                                    FoodItem.FoodGroup.Id == (int)FoodGroups.Vegan_protein)
                                 {
                                     FoodGroupsInMeal[0] = 1;
                                 }
@@ -112,7 +126,14 @@ namespace BeatServer.Genetic_algorithm
                                 }
                             }
 
-                            Score += FoodGroupsInMeal.Sum();
+                            if (FoodGroupsInMeal.Sum() == 3)
+                            {
+                                Score += (FoodGroupsInMeal.Sum() * 3);
+                            }
+                            else
+                            {
+                                Score += FoodGroupsInMeal.Sum();
+                            }
                             break;
                         }
                     case MealTypes.Snack:
@@ -133,7 +154,14 @@ namespace BeatServer.Genetic_algorithm
                                 }
                             }
 
-                            Score += FoodGroupsInMeal.Sum();
+                            if (FoodGroupsInMeal.Sum() == 2)
+                            {
+                                Score += (FoodGroupsInMeal.Sum() * 3);
+                            }
+                            else
+                            {
+                                Score += FoodGroupsInMeal.Sum();
+                            }
                             break;
                         }
                     default:
@@ -141,9 +169,18 @@ namespace BeatServer.Genetic_algorithm
                 }
 
                 // create food list
+                //foreach (Food FoodItem in currMeal.FoodsList)
+                //{
+                //    if (!foodList.Contains(FoodItem))
+                //    {
+                //        foodList.Add(FoodItem);
+                //    }
+                //}
                 foodList.AddRange(currMeal.FoodsList);
+                
             }
 
+            foodList = foodList.Distinct().ToList();
             foreach (Food foodItem in foodList)
             {
                 // בדיקת חוסרים
@@ -155,23 +192,21 @@ namespace BeatServer.Genetic_algorithm
                     }
                 }
 
-
                 // בדיקת אלרגיות
-
-                bool isAllergyFound = false;
+                //bool isAllergyFound = false;
 
                 foreach (int allergy in User.AllergiesIdList)
                 {
                     if (foodItem.AllergessIdList.Contains(allergy))
                     {
-                        isAllergyFound = true;
+                        Score -= 10;
                     }
                 }
 
-                if (!isAllergyFound)
-                {
-                    Score += 3;
-                }
+                //if (!isAllergyFound)
+                //{
+                //    Score += 10;
+                //}
 
                 // בדיקת העדפות
                 bool isPreferenceFound = false;
@@ -200,6 +235,10 @@ namespace BeatServer.Genetic_algorithm
             // בדיקת גיוון
             Score += foodList.Count;
 
+            if (Score <0)
+            {
+                Score = 1;
+            }
             menu.Score = Score;
 
             return Score;

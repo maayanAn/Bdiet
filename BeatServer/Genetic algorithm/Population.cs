@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 
 namespace BeatServer.Genetic_algorithm
@@ -38,7 +39,7 @@ namespace BeatServer.Genetic_algorithm
             Population NextGeneration = new Population(false);
             this.Menues = this.Menues.OrderByDescending(x => x.Score).ToArray();
 
-            for (int i = 0; i < Globals.PopulationSize / 2; i+=NumOfChildren)
+            for (int i = 0; i < Globals.PopulationSize; i += NumOfChildren)
             {
                 // get 2 random menues and create 2 new menues from them
                 Menu[] Children = GetChildren(GetRandomMenuId(), GetRandomMenuId());
@@ -106,11 +107,11 @@ namespace BeatServer.Genetic_algorithm
 
             }
 
-            Children[0].MealList = FirstChildMealList;
-            Children[1].MealList = SecondChildMealList;
+            Children[0] = new Menu(FirstChildMealList[0], FirstChildMealList[1], FirstChildMealList[2], FirstChildMealList[3], FirstChildMealList[4]);
+            Children[1] = new Menu(SecondChildMealList[0], SecondChildMealList[1], SecondChildMealList[2], SecondChildMealList[3], SecondChildMealList[4]);
 
-            MutateByProbability(ref Children[0]);
-            MutateByProbability(ref Children[1]);
+            //MutateByProbability(ref Children[0]);
+            //MutateByProbability(ref Children[1]);
 
             return Children;
         }

@@ -6,11 +6,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using FluentNHibernate.Mapping;
 using BeatServer.Managers;
+using System.Collections;
 
 namespace BeatServer.Models
 {
     [DataContract]
-    public class Food
+    public class Food : IEquatable<Food>
     {
         [Key]
         [DataMember]
@@ -42,7 +43,15 @@ namespace BeatServer.Models
         {
             get
             {
-                return Utils.CommaSeparatedStringToIntList(Allergens); ;
+                if (Allergens == null)
+                {
+                    return new List<int>();
+                }
+                else
+                {
+                    return Utils.CommaSeparatedStringToIntList(Allergens);
+                }
+                
             }
             set
             {
@@ -58,7 +67,14 @@ namespace BeatServer.Models
         {
             get
             {
-                return Utils.CommaSeparatedStringToIntList(Preferences);
+                if (Preferences == null)
+                {
+                    return new List<int>();
+                }
+                else
+                {
+                    return Utils.CommaSeparatedStringToIntList(Preferences);
+                }
             }
             set
             {
@@ -74,12 +90,37 @@ namespace BeatServer.Models
         {
             get
             {
-                return Utils.CommaSeparatedStringToIntList(Nutrients);
+                if (Nutrients == null)
+                {
+                    return new List<int>();
+                }
+                else
+                {
+                    return Utils.CommaSeparatedStringToIntList(Nutrients);
+                }
             }
             set
             {
                 Nutrients = string.Join(",", value);
             }
+        }
+        
+
+        public virtual bool Equals(Food other)
+        {
+            if (this.FoodId == other.FoodId)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public virtual int GetHashCode(Food obj)
+        {
+            return obj.GetHashCode();
         }
     }
 

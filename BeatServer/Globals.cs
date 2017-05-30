@@ -31,8 +31,8 @@ namespace BeatServer
     {
         public static int MainMealFoodCount = 3;
         public static int SmallMealFoodCount = 2;
-        public static int PopulationSize = 50;
-        public static int NumOfGenerations = 50;
+        public static int PopulationSize = 10;
+        public static int NumOfGenerations = 10;
         public static int MutationProbability = 5;
     }
 }

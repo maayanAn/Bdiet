@@ -60,22 +60,22 @@ namespace BeatServer.Models
         [DataMember]
         public virtual string Dinner { get; set; }
 
-        public virtual List<Meal> MealList
-        {
-            get
-            {
-                return this.MealList;
-            }
-            set
-            {
-                MealList = value;
-                Breakfast = MealList[0].ToString();
-                MidMorning = MealList[1].ToString();
-                Lunch = MealList[2].ToString();
-                Afternoon = MealList[3].ToString();
-                Dinner = MealList[4].ToString();
-            }
-        }
+        public virtual List<Meal> MealList { get; set; }
+        //{
+        //    get
+        //    {
+        //        return this.MealList;
+        //    }
+        //    set
+        //    {
+        //        MealList = value;
+        //        Breakfast = MealList[0].ToString();
+        //        MidMorning = MealList[1].ToString();
+        //        Lunch = MealList[2].ToString();
+        //        Afternoon = MealList[3].ToString();
+        //        Dinner = MealList[4].ToString();
+        //    }
+        //}
 
         public virtual int Score { get; set; }
     }

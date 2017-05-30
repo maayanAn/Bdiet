@@ -13,6 +13,8 @@ namespace BeatServer.Managers
         private static EntitiesManager m_instance;
         public static Dictionary<string, int> allergyArray;
         public static Dictionary<string, int> preferenceArray;
+        public static IList<Mealtype> MealTypesList = null;
+        public static Dictionary<Mealtype, IList<Food>> FoodsByMeal = new Dictionary<Mealtype, IList<Food>>();
 
         public static EntitiesManager getInstance()
         {
@@ -36,17 +38,17 @@ namespace BeatServer.Managers
             using (var session = NHibernateManager.OpenSession())
             {
                 IList<User> users = session.CreateCriteria<User>().List<User>();
-                IList<int> l = users[0].AllergiesIdList;
-                l.Add(1);
-                users[0].AllergiesIdList = l;
+                //IList<int> l = users[0].AllergiesIdList;
+                //l.Add(1);
+                //users[0].AllergiesIdList = l;
 
-                IList<Preference> preferences = session.CreateCriteria<Preference>().List<Preference>();
-                IList<Allergy> allergies = session.CreateCriteria<Allergy>().List<Allergy>();
-                IList<Mealtype> mealtypes = session.CreateCriteria<Mealtype>().List<Mealtype>();
-                IList<Foodgroup> foodgroup = session.CreateCriteria<Foodgroup>().List<Foodgroup>();
-                IList<Menu> menues = session.CreateCriteria<Menu>().List<Menu>();
-                IList<Nutrient> nutrients = session.CreateCriteria<Nutrient>().List<Nutrient>();
-                IList<Food> food = session.CreateCriteria<Food>().List<Food>();
+                //IList<Preference> preferences = session.CreateCriteria<Preference>().List<Preference>();
+                //IList<Allergy> allergies = session.CreateCriteria<Allergy>().List<Allergy>();
+                //IList<Mealtype> mealtypes = session.CreateCriteria<Mealtype>().List<Mealtype>();
+                //IList<Foodgroup> foodgroup = session.CreateCriteria<Foodgroup>().List<Foodgroup>();
+                //IList<Menu> menues = session.CreateCriteria<Menu>().List<Menu>();
+                //IList<Nutrient> nutrients = session.CreateCriteria<Nutrient>().List<Nutrient>();
+                //IList<Food> food = session.CreateCriteria<Food>().List<Food>();
                 return users;
             }
         }
@@ -252,9 +254,39 @@ namespace BeatServer.Managers
             {
                 List<Food> result = new List<Food>();
 
-                IList<Food> foodList = session.CreateCriteria<Food>()
-                    .Add(Expression.Or(Expression.Eq("MealType", mainType), Expression.Eq("MealType", MealTypes.Everything)))
-                    .List<Food>();
+                if (MealTypesList == null)
+                {
+                    MealTypesList = session.CreateCriteria<Mealtype>().List<Mealtype>();
+                }
+
+                Mealtype currMealType = MealTypesList.Where(x => x.Id == (int)mainType).First();
+                IList<Food> foodList;
+
+                //if (!FoodsByMeal.ContainsKey(currMealType))
+                //{
+                    
+                    if (mainType == MealTypes.Snack)
+                    {
+
+                        foodList = session.CreateCriteria<Food>()
+                        .Add(Expression.Eq("MealType", currMealType))
+                        .List<Food>();
+                    }
+                    else
+                    {
+                        foodList = session.CreateCriteria<Food>()
+                        .Add(Expression.Or(Expression.Eq("MealType", currMealType),
+                        Expression.Eq("MealType", MealTypesList.Where(x => x.Id == (int)MealTypes.Everything).First())))
+                        .List<Food>();
+                    }
+
+                //    FoodsByMeal[currMealType] = foodList;
+                //}
+                //else
+                //{
+                //    foodList = FoodsByMeal[currMealType];
+                //}
+                
 
                 if (foodList.Count > 0)
                 {
