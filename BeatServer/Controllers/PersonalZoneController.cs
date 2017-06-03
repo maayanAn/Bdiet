@@ -22,14 +22,13 @@ namespace BeatServer.Controllers
         public PersonalZoneLists Get()
         {
             IList<Allergy> listAllergies = EntitiesManager.getInstance().GetAllergies();
-            IList<Preference> listPreferences = EntitiesManager.getInstance().GetPreferences();                      
-            
-            PersonalZoneLists pList = new PersonalZoneLists();
-            pList.allergiesList = new List<Allergy>(listAllergies); 
-            pList.preferencesList = new List<Preference>(listPreferences);
-            EntitiesManager.getInstance().ListToItemArray(pList);
+            IList<Preference> listPreferences = EntitiesManager.getInstance().GetPreferences();
 
-            return pList;
+            Globals.pList = new PersonalZoneLists();
+            Globals.pList.allergiesList = new List<Allergy>(listAllergies);
+            Globals.pList.preferencesList = new List<Preference>(listPreferences);            
+
+            return Globals.pList;
         }
 
         // POST: api/PersonalZone
@@ -47,6 +46,7 @@ namespace BeatServer.Controllers
             {
                 return BadRequest("Cannot go to menu, please try again");
             }
+            Globals.ListToItemArray(Globals.pList);
             EntitiesManager.getInstance().UpdateUsersZone(value);
 
             return CreatedAtRoute("DefaultApi", new { id = pz.userId }, pz);

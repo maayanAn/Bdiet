@@ -27,10 +27,41 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
         }, function errorCallback(response) {
             // called asynchronously if an error occurs
             // or server returns response with an error status.
-            js.push({ name: "None" });
-            js2.push({ name: "None" });
+            $scope.allergies.push({ name: "None" });
+            $scope.preferences.push({ name: "None" });
         });
     });
+    //------------------------------------------------------------------
+    //$(function (ngModelCtrl) {
+    //    var xhr = new XMLHttpRequest();
+    //    xhr.open('GET', 'http://localhost:51149/api/PersonalZone', true);
+
+    //    xhr.timeout = 10000; // time in milliseconds
+
+    //    xhr.onload = function (response) {
+    //        // Request finished. Do processing here.
+    //        var allergyList = response.data.allergiesList;
+    //        var preferenceList = response.data.preferencesList;
+    //        for (i = 0; i < allergyList.length; i++) {
+    //            generalAllergies.push({ name: allergyList[i].Name });
+    //        }
+    //        for (i = 0; i < preferenceList.length; i++) {
+    //            generalPreferences.push({ name: preferenceList[i].Name });
+    //        }
+
+    //        $scope.allergies = generalAllergies;
+    //        $scope.preferences = generalPreferences;
+    //    };
+
+    //    xhr.ontimeout = function (e) {
+    //        // XMLHttpRequest timed out. Do something here.
+    //        $scope.allergies = [{ name: "None" }];
+    //        $scope.preferences = [{ name: "None" }];
+    //    };
+
+    //    xhr.send(null);
+    //});
+    //--------------------------------------------------------------------
 
 
     CheckValidLists = function () {

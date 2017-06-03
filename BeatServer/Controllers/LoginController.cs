@@ -19,7 +19,7 @@ namespace BeatServer.Controllers
         public IEnumerable<string> Get()
         {
             
-            IEnumerable<User> lat = EntitiesManager.getInstance().GetUsers();
+            IEnumerable<User> lat = EntitiesManager.getInstance().GetUsers();        
 
             GeneticAlgorithmGenerator GA = new GeneticAlgorithmGenerator(lat.First());
             Menu m = GA.RunAlgorithm();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BeatServer.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -34,5 +35,24 @@ namespace BeatServer
         public static int PopulationSize = 200;
         public static int NumOfGenerations = 200;
         public static int MutationProbability = 5;
+        public static Dictionary<string, int> allergyArray;
+        public static Dictionary<string, int> preferenceArray;
+        public static PersonalZoneLists pList;
+
+
+        public static void ListToItemArray(PersonalZoneLists lists)
+        {
+            allergyArray = new Dictionary<string, int>();
+            foreach (var item in lists.allergiesList)
+            {
+                allergyArray[item.Name] = item.Id;
+            }
+
+            preferenceArray = new Dictionary<string, int>();
+            foreach (var item in lists.preferencesList)
+            {
+                preferenceArray[item.Name] = item.Id;
+            }
+        }
     }
 }

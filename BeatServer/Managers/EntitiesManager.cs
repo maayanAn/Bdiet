@@ -12,8 +12,8 @@ namespace BeatServer.Managers
     {
         private static EntitiesManager m_instance;
         private static Random Rand;
-        public static Dictionary<string, int> allergyArray;
-        public static Dictionary<string, int> preferenceArray;
+        //public static Dictionary<string, int> allergyArray;
+        //public static Dictionary<string, int> preferenceArray;
         public static IList<Mealtype> MealTypesList = null;
         public static Dictionary<Mealtype, IList<Food>> FoodsByMeal = new Dictionary<Mealtype, IList<Food>>();
 
@@ -155,8 +155,8 @@ namespace BeatServer.Managers
             {
                 using (var transaction = session.BeginTransaction())
                 {
-                    ret.Allergies = ConvertOptionNameToId(details.userAllergies, allergyArray);
-                    ret.Preferences = ConvertOptionNameToId(details.userPreferences, preferenceArray);
+                    ret.Allergies = ConvertOptionNameToId(details.userAllergies, Globals.allergyArray);
+                    ret.Preferences = ConvertOptionNameToId(details.userPreferences, Globals.preferenceArray);
                     try
                     {                        
                         session.Update(ret);                        
@@ -172,26 +172,20 @@ namespace BeatServer.Managers
         }
 
 
-        public void ListToItemArray(PersonalZoneLists lists)
-        {
-            allergyArray = new Dictionary<string, int>();
-            //allergyArray["None"] = 0;
-            if (lists.allergiesList == null)
-            {
+        //public void ListToItemArray(PersonalZoneLists lists)
+        //{
+        //    Globals.allergyArray =new Dictionary<string, int>();     
+        //    foreach (var item in lists.allergiesList)
+        //    {
+        //        Globals.allergyArray[item.Name] = item.Id;
+        //    }
 
-            }
-            foreach (var item in lists.allergiesList)
-            {
-                allergyArray[item.Name] = item.Id;
-            }
-
-            preferenceArray = new Dictionary<string, int>();
-            //preferenceArray["None"] = 0;
-            foreach (var item in lists.preferencesList)
-            {
-                preferenceArray[item.Name] = item.Id;
-            }
-        }
+        //    Globals.preferenceArray = new Dictionary<string, int>();
+        //    foreach (var item in lists.preferencesList)
+        //    {
+        //        Globals.preferenceArray[item.Name] = item.Id;
+        //    }
+        //}
 
         public string ConvertOptionNameToId(List<string> userItems, Dictionary<string, int> generalArray)
         {
