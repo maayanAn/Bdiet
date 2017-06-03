@@ -6,7 +6,7 @@ beatApp.controller('menuController', function menuController($scope, $rootScope)
 
         var req = {
             method: 'GET',
-            url: 'http://localhost:51404/api/Menu'
+            url: 'http://localhost:51149/api/Menu'
         }
 
         $http(req).then(function successCallback(response) {
