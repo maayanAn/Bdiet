@@ -175,14 +175,18 @@ namespace BeatServer.Managers
         public void ListToItemArray(PersonalZoneLists lists)
         {
             allergyArray = new Dictionary<string, int>();
-            allergyArray["None"] = 0;
+            //allergyArray["None"] = 0;
+            if (lists.allergiesList == null)
+            {
+
+            }
             foreach (var item in lists.allergiesList)
             {
                 allergyArray[item.Name] = item.Id;
             }
 
             preferenceArray = new Dictionary<string, int>();
-            preferenceArray["None"] = 0;
+            //preferenceArray["None"] = 0;
             foreach (var item in lists.preferencesList)
             {
                 preferenceArray[item.Name] = item.Id;
@@ -192,15 +196,22 @@ namespace BeatServer.Managers
         public string ConvertOptionNameToId(List<string> userItems, Dictionary<string, int> generalArray)
         {
             string stringIds = "";
-            foreach (var item in userItems)
+            if (userItems[0].Equals("None"))
             {
-                stringIds += generalArray[item] + ",";
+                stringIds = null;
             }
-
-            if (string.Empty != stringIds)
+            else
             {
-                char[] MyChar = { ',' };
-                stringIds = stringIds.TrimEnd(MyChar);
+                foreach (var item in userItems)
+                {
+                    stringIds += generalArray[item] + ",";
+                }
+
+                if (string.Empty != stringIds)
+                {
+                    char[] MyChar = { ',' };
+                    stringIds = stringIds.TrimEnd(MyChar);
+                }
             }
             return stringIds;
         }
@@ -214,7 +225,11 @@ namespace BeatServer.Managers
                     try
                     {
                         User user = GetUser(userId);
-                        user.NutrientLacksList = lacks;
+                        //user.NutrientLacksList = lacks;
+                        if (lacks != null)
+                            user.NutrientLacks = string.Join(",", lacks.ToArray());
+                        else
+                            user.NutrientLacks = null;
                         session.Update(user);
                         transaction.Commit();
                     }

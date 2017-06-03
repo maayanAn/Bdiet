@@ -83,14 +83,13 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
     $scope.getBloodTests = function () {
         if (!$scope.hasReceivedBloodTests) {
             swal("Blood Tests", "connecting with your health services, this might take a few seconds..", "info");
-
-            $http({
+           
+            var req = {
                 method: 'GET',
-                url: 'http://localhost:51149/api/BloodTestsResults',
-                data: {
-                    "userId": $rootScope.user.UserId
-                }
-            }).then(function successCallback(response) {
+                url: 'http://localhost:51149/api/BloodTestsResults?userId=' + $rootScope.user.UserId 
+            }
+
+            $http(req).then(function successCallback(response) {
                 $scope.bloodElements = response.data;
                 $scope.hasReceivedBloodTests = true;
             }, function errorCallback(response) {
