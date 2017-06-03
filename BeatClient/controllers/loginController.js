@@ -7,7 +7,7 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
     $scope.login = function () {
         var req = {
             method: 'POST',
-            url: 'http://localhost:51404/api/Login', // 51149
+            url: 'http://localhost:51149/api/Login', // 51149
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin' : '*'
@@ -46,7 +46,7 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
         else {
             var req = {
                 method: 'POST',
-                url: 'http://localhost:51404/api/Users',
+                url: 'http://localhost:51149/api/Users',
                 headers: {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
