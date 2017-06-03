@@ -6,6 +6,7 @@ using System.Xml;
 using BeatServer.Models;
 using System.Web.Http;
 using BeatServer.Managers;
+using System.Web.Http.Description;
 
 namespace BeatServer.Controllers
 {
@@ -15,8 +16,8 @@ namespace BeatServer.Controllers
         public List<BloodTest> contents = new List<BloodTest>();
 
 
-        public List<BloodTest> getBloodTestsResults([FromBody]int userId)
-        {            
+        public List<BloodTest> getBloodTestsResults([FromUri] int userId)
+        {
             var path = HttpContext.Current.Server.MapPath(@"~/xml/test.xml");
             XmlTextReader reader = new XmlTextReader(path);
             try

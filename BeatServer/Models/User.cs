@@ -112,6 +112,7 @@ namespace BeatServer.Models
             Map(x => x.Password);
             Map(x => x.Allergies);
             Map(x => x.Preferences);
+            Map(x => x.NutrientLacks);
             
         }
     }
