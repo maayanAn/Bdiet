@@ -8,7 +8,7 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
     $(function (ngModelCtrl) {
         $http({
             method: 'GET',
-            url: 'http://localhost:51404/api/PersonalZone'            
+            url: 'http://localhost:51149/api/PersonalZone'            
         }).then(function successCallback(response) {
              //this callback will be called asynchronously
              //when the response is available
@@ -50,7 +50,7 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
 
             var req = {
                 method: 'POST',
-                url: 'http://localhost:51404/api/PersonalZone',
+                url: 'http://localhost:51149/api/PersonalZone',
                 headers: {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
@@ -86,7 +86,7 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
 
             $http({
                 method: 'GET',
-                url: 'http://localhost:51404/api/BloodTestsResults',
+                url: 'http://localhost:51149/api/BloodTestsResults',
                 data: {
                     "userId": $rootScope.user.UserId
                 }
