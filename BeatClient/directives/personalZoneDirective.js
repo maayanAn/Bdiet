@@ -25,7 +25,7 @@ beatApp.directive('personalZone', ['$timeout', function ($timeout) {
                 $timeout(function () {
                     $(".selectpicker").selectpicker('refresh');
                 }, 500);
-            });
+            }, true);
 
         }
     }
