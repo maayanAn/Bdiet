@@ -302,9 +302,25 @@ namespace BeatServer.Managers
                 }
 
                 return result;
-            }
+            }   
+        }
 
-            
+        public Food GetFoodByGroup(MealTypes mainType, int foodGroup)
+        {
+            using (var session = NHibernateManager.OpenSession())
+            {
+                IList<Food> foodList = session.CreateCriteria<Food>()
+                .Add(Expression.Or(Expression.Eq("MealType", mainType), Expression.Eq("MealType", MealTypes.Everything)))
+                .Add(Expression.Eq("FoodGroup", foodGroup))
+                .List<Food>();
+
+                Random Rand = new Random();
+
+                int ChosenIndex = Rand.Next(0, foodList.Count - 1);
+
+                return foodList[ChosenIndex];
+                
+            }
         }
 
         #endregion

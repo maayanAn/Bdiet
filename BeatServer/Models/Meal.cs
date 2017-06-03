@@ -25,6 +25,19 @@ namespace BeatServer.Models
             Type = MainType;
         }
 
+        public Meal(MealTypes MainType, int[] foodGroupId)
+        {
+            Food currFood;
+            FoodsList = new List<Food>();
+            Type = MainType;
+
+            for (int i = 0; i < foodGroupId.Length; i++)
+            {
+                currFood = EntitiesManager.getInstance().GetFoodByGroup(MainType, foodGroupId[i]);
+                FoodsList.Add(currFood);
+            }
+        }
+
         public override string ToString()
         {
             string result = "";
