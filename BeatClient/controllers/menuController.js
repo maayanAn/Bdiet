@@ -1,6 +1,6 @@
 ﻿var beatApp = angular.module('beatApp');
 
-beatApp.controller('menuController', function menuController($scope, $rootScope) {
+beatApp.controller('menuController', function menuController($scope, $rootScope, $http) {
 
     var calcMenu = function () {
 
@@ -12,7 +12,7 @@ beatApp.controller('menuController', function menuController($scope, $rootScope)
         $http(req).then(function successCallback(response) {
             //this callback will be called asynchronously
             //when the response is available
-            var breakfast = response.data.Breakfast;
+            var Breakfast = response.data.Breakfast;
             var MidMorning = response.data.MidMorning;
             var Lunch = response.data.Lunch;
             var Afternoon = response.data.Afternoon;
@@ -31,7 +31,7 @@ beatApp.controller('menuController', function menuController($scope, $rootScope)
                 }
             ];
 
-            $scope.menu = menusList[0].menu;
+            $scope.menu = $scope.menusList[0].menu;
 
         }, function errorCallback(response) {
             // called asynchronously if an error occurs

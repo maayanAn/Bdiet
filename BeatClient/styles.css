@@ -22,12 +22,17 @@ footer {
     display: initial;
 }
 
+.regLeft {
+    background-image: url('img/leftReg.jpg'),url('img/rightReg.jpg');
+    background-repeat: no-repeat, no-repeat;
+    background-position:  left, right;
+}
 .regRight {
-    height: 43%;
+    /*height: 43%;
     width: 313px;
     position: absolute;
     top: 290%;
-    right: 0;
+    right: 0;*/
     background-image: url('img/rightReg.jpg');
 }
 

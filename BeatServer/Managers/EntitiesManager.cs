@@ -15,6 +15,7 @@ namespace BeatServer.Managers
         //public static Dictionary<string, int> allergyArray;
         //public static Dictionary<string, int> preferenceArray;
         public static IList<Mealtype> MealTypesList = null;
+        public static IList<Foodgroup> FoodGroupList = null;
         public static Dictionary<Mealtype, IList<Food>> FoodsByMeal = new Dictionary<Mealtype, IList<Food>>();
 
         public static EntitiesManager getInstance()
@@ -318,9 +319,23 @@ namespace BeatServer.Managers
         {
             using (var session = NHibernateManager.OpenSession())
             {
+                if (MealTypesList == null)
+                {
+                    MealTypesList = session.CreateCriteria<Mealtype>().List<Mealtype>();
+                }
+
+                Mealtype currMealType = MealTypesList.Where(x => x.Id == (int)mainType).First();
+
+                if (FoodGroupList == null)
+                {
+                    FoodGroupList = session.CreateCriteria<Foodgroup>().List<Foodgroup>();
+                }
+
+                Foodgroup currFoodType = FoodGroupList.Where(x => x.Id == foodGroup).First();
                 IList<Food> foodList = session.CreateCriteria<Food>()
-                .Add(Expression.Or(Expression.Eq("MealType", mainType), Expression.Eq("MealType", MealTypes.Everything)))
-                .Add(Expression.Eq("FoodGroup", foodGroup))
+                .Add(Expression.Or(Expression.Eq("MealType", currMealType), 
+                Expression.Eq("MealType", MealTypesList.Where(x => x.Id == (int)MealTypes.Everything).First())))
+                .Add(Expression.Eq("FoodGroup", currFoodType))
                 .List<Food>();
 
                 Random Rand = new Random();
