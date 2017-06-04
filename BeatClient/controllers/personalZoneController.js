@@ -57,7 +57,7 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
                 data: {
                     "userAllergies": $scope.selectedAllergies,
                     "userPreferences": $scope.selectedNutritionalPreferences,
-                    "userId": $rootScope.user.UserId
+                    "UserId": $rootScope.user.UserId
                 }
             }
 
@@ -85,7 +85,7 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
            
             var req = {
                 method: 'GET',
-                url: 'http://localhost:51149/api/BloodTestsResults?userId=' + $rootScope.user.UserId 
+                url: 'http://localhost:51149/api/BloodTestsResults?UserId=' + $rootScope.user.UserId 
             }
 
             $http(req).then(function successCallback(response) {

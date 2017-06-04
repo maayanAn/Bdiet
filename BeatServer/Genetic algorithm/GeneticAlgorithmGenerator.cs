@@ -196,6 +196,11 @@ namespace BeatServer.Genetic_algorithm
             }
 
             foodList = foodList.Distinct().ToList();
+
+            // בדיקת גיוון
+            Score += foodList.Count * 2;
+
+
             foreach (Food foodItem in foodList)
             {
                 // בדיקת חוסרים
@@ -207,25 +212,29 @@ namespace BeatServer.Genetic_algorithm
                     }
                 }
 
+                // בדיקת כולסטרול
+                if (User.NutrientLacksList.Contains(9) && !foodItem.NutrientsIdList.Contains(9))
+                {
+                    Score += 2;
+                }
+
                 // בדיקת אלרגיות
-                //bool isAllergyFound = false;
 
                 foreach (int allergy in User.AllergiesIdList)
                 {
                     if (foodItem.AllergessIdList.Contains(allergy))
                     {
-                        Score -= 3;
+                        Score = 0;
                     }
                 }
-
-                //if (!isAllergyFound)
-                //{
-                //    Score += 10;
-                //}
-
+                
                 // בדיקת העדפות
                 bool isPreferenceFound = false;
 
+                if (User.PreferencesIdList.Count == 0)
+                {
+                    isPreferenceFound = true;
+                }
                 foreach (int preference in User.PreferencesIdList)
                 {
                     if (foodItem.PreferencesIdList.Contains(preference))
@@ -234,30 +243,19 @@ namespace BeatServer.Genetic_algorithm
                     }
                 }
 
-                if (isPreferenceFound)
+                if (!isPreferenceFound)
                 {
-                    Score += 2;
-                }
-                else
-                {
-                    Score -= 2;
+                    Score = 0;
                 }
 
-                // בדיקת כולסטרול
-                if (User.NutrientLacksList.Contains(9) && !foodItem.NutrientsIdList.Contains(9))
-                {
-                    Score += 2;
-                }
-                
             }
 
-            // בדיקת גיוון
-            Score += foodList.Count;
-
-            if (Score <0)
+            
+            if (Score <= 0)
             {
                 Score = 1;
             }
+            
             menu.Score = Score;
 
             return Score;

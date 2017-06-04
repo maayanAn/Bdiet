@@ -17,36 +17,46 @@ namespace BeatServer.Genetic_algorithm
 
         public Population(bool Random= true)
         {
-            Menues = new Menu[Globals.PopulationSize];
-            rand = new System.Random();
-
-            if (Random)
-            {
-                for (int i = 0; i < Globals.PopulationSize; i++)
-                {
-                    Meal Breakfast = new Meal(Globals.MainMealFoodCount, MealTypes.MorningOrEvening);
-                    Meal MidMorning = new Meal(Globals.SmallMealFoodCount, MealTypes.Snack);
-                    Meal Lunch = new Meal(Globals.MainMealFoodCount, MealTypes.Noon);
-                    Meal Afternoon = new Meal(Globals.SmallMealFoodCount, MealTypes.Snack);
-                    Meal Dinner = new Meal(Globals.MainMealFoodCount, MealTypes.MorningOrEvening);
-
-                    Menu CurrMenu = new Menu(Breakfast, MidMorning, Lunch, Afternoon, Dinner);
-                    Menues[i] = CurrMenu;
-                }
-            }
+            Menues = GenerateRandomPopulation(Globals.PopulationSize);
         }
         
+        private Menu[] GenerateRandomPopulation(int PopulationSize)
+        {
+            Menu[] RandomMenues = new Menu[Globals.PopulationSize];
+            rand = new System.Random();
+
+            for (int i = 0; i < PopulationSize; i++)
+            {
+                Meal Breakfast = new Meal(Globals.MainMealFoodCount, MealTypes.MorningOrEvening);
+                Meal MidMorning = new Meal(Globals.SmallMealFoodCount, MealTypes.Snack);
+                Meal Lunch = new Meal(Globals.MainMealFoodCount, MealTypes.Noon);
+                Meal Afternoon = new Meal(Globals.SmallMealFoodCount, MealTypes.Snack);
+                Meal Dinner = new Meal(Globals.MainMealFoodCount, MealTypes.MorningOrEvening);
+
+                Menu CurrMenu = new Menu(Breakfast, MidMorning, Lunch, Afternoon, Dinner);
+                RandomMenues[i] = CurrMenu;
+            }
+
+            return RandomMenues;
+        }
+
         public Population GetNextGeneration()
         {
             Population NextGeneration = new Population(false);
             this.Menues = this.Menues.OrderByDescending(x => x.Score).ToArray();
-
-            for (int i = 0; i < Globals.PopulationSize; i += NumOfChildren)
+            int halfPopulation = Globals.PopulationSize / 2;
+            for (int i = 0; i < halfPopulation; i += NumOfChildren)
             {
                 // get 2 random menues and create 2 new menues from them
                 Menu[] Children = GetChildren(GetRandomMenuId(), GetRandomMenuId());
                 NextGeneration.Menues[i] = Children[0];
                 NextGeneration.Menues[i + 1] = Children[1];
+            }
+
+            Menu[] RandomMenues = GenerateRandomPopulation(halfPopulation);
+            for (int i = halfPopulation; i < Globals.PopulationSize; i++)
+            {
+                NextGeneration.Menues[i] = RandomMenues[i - halfPopulation];
             }
 
             return NextGeneration;

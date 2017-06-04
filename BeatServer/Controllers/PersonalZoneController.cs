@@ -49,7 +49,7 @@ namespace BeatServer.Controllers
             Globals.ListToItemArray(Globals.pList);
             EntitiesManager.getInstance().UpdateUsersZone(value);
 
-            return CreatedAtRoute("DefaultApi", new { id = pz.userId }, pz);
+            return CreatedAtRoute("DefaultApi", new { id = pz.UserId }, pz);
         }
     }
 }

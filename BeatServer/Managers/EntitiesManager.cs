@@ -150,7 +150,7 @@ namespace BeatServer.Managers
 
         public User UpdateUsersZone(PersonalZone details)
         {
-            User ret = GetUser(details.userId);
+            User ret = GetUser(details.UserId);
 
             using (var session = NHibernateManager.OpenSession())
             {
@@ -211,7 +211,7 @@ namespace BeatServer.Managers
             return stringIds;
         }
 
-        public void SaveBloodResultsLacks(List<int> lacks, int userId)
+        public void SaveBloodResultsLacks(List<int> lacks, int UserId)
         {
             using (var session = NHibernateManager.OpenSession())
             {
@@ -219,7 +219,7 @@ namespace BeatServer.Managers
                 {
                     try
                     {
-                        User user = GetUser(userId);
+                        User user = GetUser(UserId);
                         //user.NutrientLacksList = lacks;
                         if (lacks != null)
                             user.NutrientLacks = string.Join(",", lacks.ToArray());

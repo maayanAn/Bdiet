@@ -16,7 +16,7 @@ namespace BeatServer.Controllers
         public List<BloodTest> contents = new List<BloodTest>();
 
 
-        public List<BloodTest> getBloodTestsResults([FromUri] int userId)
+        public List<BloodTest> getBloodTestsResults([FromUri] int UserId)
         {
             var path = HttpContext.Current.Server.MapPath(@"~/xml/test.xml");
             XmlTextReader reader = new XmlTextReader(path);
@@ -70,7 +70,7 @@ namespace BeatServer.Controllers
 
                 }
 
-                EntitiesManager.getInstance().SaveBloodResultsLacks(lacksList, userId);
+                EntitiesManager.getInstance().SaveBloodResultsLacks(lacksList, UserId);
             }
             catch (Exception ex)
             {

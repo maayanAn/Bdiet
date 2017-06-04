@@ -15,6 +15,6 @@ namespace BeatServer.Models
         public virtual List<string> userPreferences { get; set; }
 
         [Required]
-        public virtual int userId { get; set; }
+        public virtual int UserId { get; set; }
     }
 }

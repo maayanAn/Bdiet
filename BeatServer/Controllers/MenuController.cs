@@ -5,7 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using BeatServer.Models;
-
+using BeatServer.Genetic_algorithm;
+using BeatServer.Managers;
 
 namespace BeatServer.Controllers
 {
@@ -35,23 +36,31 @@ namespace BeatServer.Controllers
         //}
 
         // GET api/<controller>
-        public Menu Get()
+        public Menu Get([FromUri] int id)
         {
-            Meal Breakfast = new Meal(MealTypes.MorningOrEvening, new int[] { (int)FoodGroups.Cheese,
-                                                                              (int)FoodGroups.Carbohydrates,
-                                                                              (int)FoodGroups.Vegetables});
-            Meal MidMorning = new Meal(MealTypes.Snack, new int[] { (int)FoodGroups.Fats,
-                                                                    (int)FoodGroups.Fruits });
-            Meal Lunch = new Meal(MealTypes.Noon, new int[] { (int)FoodGroups.Meat,
-                                                              (int)FoodGroups.Legumes,
-                                                              (int)FoodGroups.Vegetables });
-            Meal Afternoon = new Meal(MealTypes.Snack, new int[] { (int)FoodGroups.Fats,
-                                                                    (int)FoodGroups.Fruits });
-            Meal Dinner = new Meal(MealTypes.MorningOrEvening, new int[] { (int)FoodGroups.Cheese,
-                                                                              (int)FoodGroups.Carbohydrates,
-                                                                              (int)FoodGroups.Vegetables});
+            //Meal Breakfast = new Meal(MealTypes.MorningOrEvening, new int[] { (int)FoodGroups.Cheese,
+            //                                                                  (int)FoodGroups.Carbohydrates,
+            //                                                                  (int)FoodGroups.Vegetables});
+            //Meal MidMorning = new Meal(MealTypes.Snack, new int[] { (int)FoodGroups.Fats,
+            //                                                        (int)FoodGroups.Fruits });
+            //Meal Lunch = new Meal(MealTypes.Noon, new int[] { (int)FoodGroups.Meat,
+            //                                                  (int)FoodGroups.Legumes,
+            //                                                  (int)FoodGroups.Vegetables });
+            //Meal Afternoon = new Meal(MealTypes.Snack, new int[] { (int)FoodGroups.Fats,
+            //                                                        (int)FoodGroups.Fruits });
+            //Meal Dinner = new Meal(MealTypes.MorningOrEvening, new int[] { (int)FoodGroups.Cheese,
+            //                                                                  (int)FoodGroups.Carbohydrates,
+            //                                                                  (int)FoodGroups.Vegetables});
 
-            Menu CurrMenu = new Menu(Breakfast, MidMorning, Lunch, Afternoon, Dinner);
+            //Menu CurrMenu = new Menu(Breakfast, MidMorning, Lunch, Afternoon, Dinner);
+
+            if (id == 0)
+            {
+                return null;
+            }
+
+            GeneticAlgorithmGenerator GA = new GeneticAlgorithmGenerator(EntitiesManager.getInstance().GetUser(id));
+            Menu CurrMenu = GA.RunAlgorithm();
 
             return CurrMenu;
         }
