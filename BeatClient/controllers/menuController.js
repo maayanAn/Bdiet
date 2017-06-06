@@ -1,14 +1,14 @@
 ﻿var beatApp = angular.module('beatApp');
 
 beatApp.controller('menuController', function menuController($scope, $rootScope, $http) {
-
+    
     var calcMenu = function () {
 
         var req = {
             method: 'GET',
             url: 'http://localhost:51149/api/Menu'
         }
-
+        
         $http(req).then(function successCallback(response) {
             //this callback will be called asynchronously
             //when the response is available
@@ -32,12 +32,12 @@ beatApp.controller('menuController', function menuController($scope, $rootScope,
             ];
 
             $scope.menu = $scope.menusList[0].menu;
-
+            
         }, function errorCallback(response) {
             // called asynchronously if an error occurs
             // or server returns response with an error status.
-            js.push({ name: "None" });
-            js2.push({ name: "None" });
+            console.log(response);
+            swal("Error", "Menu error: Please try again later", "error");
         });
     }
     

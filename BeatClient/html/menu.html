@@ -4,9 +4,14 @@
             <div class="col-lg-12 text-center">
                 <h2 class="section-heading">Menu</h2>
                 <h3 ng-show="menu" class="section-subheading text-muted">Your personal menu - designed just for you</h3>
-                <h3 ng-show="!menu" class="section-subheading text-muted">Get your new menu in the personal zone</h3>
-            </div>
-        </div>
+                <h3 ng-show="!menu" class="section-subheading text-muted">We are creating your ideal menu, please be patient</h3>                                
+                    <div id="waitDiv" ng-show="!menu">
+                        <div id="spinnerContainer">
+                            <i class="fa fa-spinner fa-spin" id="waitSpinner"></i>
+                        </div>
+                    </div>
+            </div>            
+        </div>    
         <div class="row" ng-show="menu">
             <div class="col-lg-12">
                 <ul class="timeline">
@@ -88,8 +93,8 @@
                             </h4>
                         </div>
                     </li>
-                </ul>
-            </div>
+                </ul>                
+            </div>            
         </div>
     </div>
 </section>

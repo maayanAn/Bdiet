@@ -1,7 +1,7 @@
 var beatApp = angular.module('beatApp');
 
 beatApp.controller('personalZoneController', function personalZoneController($scope, $rootScope, $location, $anchorScroll, $http) {
-    $scope.hasReceivedBloodTests = false;
+    $scope.hasReceivedBloodTests = false;   
 
     var generalAllergies = [];
     generalPreferences = [];
@@ -43,8 +43,7 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
     $scope.createMenu = function () {
         if (!$scope.hasReceivedBloodTests) {
             swal("Error", "we have to receive your blood tests first! please click on the right button", "error");
-        } else {
-
+        } else {        
             CheckValidLists();
 
             var req = {

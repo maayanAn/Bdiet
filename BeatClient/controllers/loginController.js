@@ -25,7 +25,7 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
             $rootScope.user = angular.copy(response.data);
             swal("Hi " + $rootScope.user.Name, "You logged in successfuly", "success");
 
-            $rootScope.$broadcast('userLoggedIn');
+            $rootScope.$broadcast('userLoggedIn');           
 
             //$location.hash('personal-zone');
             $anchorScroll('personal-zone');
