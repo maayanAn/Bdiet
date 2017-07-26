@@ -8,16 +8,9 @@ using FluentNHibernate.Mapping;
 
 namespace BeatServer.Models
 {
-    
      public class PersonalZoneLists
-    {        
-    
-        
-         public List<Allergy> allergiesList { get; set; }
-
-      
-       
+     {
+        public List<Allergy> allergiesList { get; set; }
         public List<Preference> preferencesList { get; set; }
-        
-    }
+     }
 }

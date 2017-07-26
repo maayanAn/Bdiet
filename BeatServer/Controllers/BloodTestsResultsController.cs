@@ -15,7 +15,7 @@ namespace BeatServer.Controllers
     {
         public List<BloodTest> contents = new List<BloodTest>();
 
-
+        // Read blood test results from the xml file and send it to the client
         public List<BloodTest> getBloodTestsResults([FromUri] int UserId)
         {
             var path = HttpContext.Current.Server.MapPath(@"~/xml/test.xml");
@@ -23,7 +23,10 @@ namespace BeatServer.Controllers
             try
             {
                 BloodTest bt = new BloodTest();
+
                 List<int> lacksList = new List<int>();
+
+                // Parsing the xml 
                 while (reader.Read())
                 {
                     string temp = "";
@@ -33,6 +36,7 @@ namespace BeatServer.Controllers
                         temp = reader.Name;
                     if (reader.NodeType == XmlNodeType.Element)
                     {
+                        // Read the blood test results 
                         if (temp == "VALUE")
                             bt.value = int.Parse(reader.ReadString());
                         else if (temp == "NAME")
@@ -44,12 +48,14 @@ namespace BeatServer.Controllers
                             bt.max_val = int.Parse(reader.ReadString());
                             contents.Add(bt);
 
+                            // Check for lacks in the blood test results
                             if (bt.value < bt.min_val)
                             {
                                 int NutrientId = EntitiesManager.getInstance().GetNutrientIdByName(bt.name);
 
                                 if (NutrientId != -1)
                                 {
+                                    // Add the lack to the list
                                     lacksList.Add(NutrientId);
                                 }
                                 
@@ -70,13 +76,12 @@ namespace BeatServer.Controllers
 
                 }
 
+                // Save the user lacks in the user table
                 EntitiesManager.getInstance().SaveBloodResultsLacks(lacksList, UserId);
             }
-            catch (Exception ex)
-            {
-                //add an exeption to the result
-            }
+            catch (Exception ex) {}
             
+            // Return the blood test to the user
             return contents;
         }
 

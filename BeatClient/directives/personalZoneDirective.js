@@ -1,21 +1,23 @@
-﻿//var beatApp = angular.module('beatApp', []);
-beatApp.directive('personalZone', ['$timeout', function ($timeout) {
+﻿beatApp.directive('personalZone', ['$timeout', function ($timeout) {
     return {
         controller: 'personalZoneController',
         restrict: 'E',
-        //        replace: 'false',
         templateUrl: 'html/personalZone.html',
-        //            template: '<div>Hello fromt Directive</div>'
         scope: {
             options: '=',
             ngModel: '=',
             onChanged: '&'
         },
         link: function (scope, element, attrs, ngModelCntrl) {
+
+            // init the select picker (multi select)
             $(function (ngModelCtrl) {
                 $(".selectpicker").selectpicker();
             });
+
             scope.innerModel = scope.ngModel;
+
+            // Set the changed value
             scope.selectpickerChanged = function () {
                 ngModelCntrl.$setViewValue(scope.innerModel);
                 scope.onChanged();

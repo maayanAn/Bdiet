@@ -32,5 +32,4 @@ namespace BeatServer.Models
 
         }
     }
-
 }

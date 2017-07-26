@@ -101,7 +101,6 @@
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\PersonalZoneController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Genetic algorithm\GeneticAlgorithmGenerator.cs" />
     <Compile Include="Genetic algorithm\Population.cs" />
     <Compile Include="Global.asax.cs">
@@ -110,7 +109,6 @@
     <Compile Include="Globals.cs" />
     <Compile Include="Managers\EntitiesManager.cs" />
     <Compile Include="Managers\NHibernateManager.cs" />
-    <Compile Include="Managers\Utils.cs" />
     <Compile Include="Models\Allergy.cs" />
     <Compile Include="Models\BloodTest.cs" />
     <Compile Include="Models\Food.cs" />

@@ -54,5 +54,10 @@ namespace BeatServer
                 preferenceArray[item.Name] = item.Id;
             }
         }
+
+        public static List<int> CommaSeparatedStringToIntList(string list)
+        {
+            return list.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+        }
     }
 }

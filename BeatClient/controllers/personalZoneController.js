@@ -1,34 +1,39 @@
 var beatApp = angular.module('beatApp');
 
 beatApp.controller('personalZoneController', function personalZoneController($scope, $rootScope, $location, $anchorScroll, $http) {
+    // init veriables
     $scope.hasReceivedBloodTests = false;
     var generalAllergies = [];
     var generalPreferences = [];
     $scope.allergies = [];
     $scope.preferences = [];
 
+    // on page init
     $(function (ngModelCtrl) {
+        // send the request and handle the response (success or error)
         $http({
             method: 'GET',
-            url: 'http://localhost:51149/api/PersonalZone' 
-            //url: 'http://db.cs.colman.ac.il/BEat/api/PersonalZone'            
+            url: 'http://localhost:51149/api/PersonalZone' //dev
+            //url: 'http://db.cs.colman.ac.il/BEat/api/PersonalZone'   //prod         
         }).then(function successCallback(response) {
+            //this callback will be called asynchronously when the response is available
             console.log(response);
-
-             //this callback will be called asynchronously
-             //when the response is available
+            
             var allergyList = response.data.allergiesList;
             var preferenceList = response.data.preferencesList;
+
+            // adding the allergies list from the server response
             for (i = 0; i < allergyList.length; i++) {
                 generalAllergies.push({ name: allergyList[i].Name });
             }
+
+            // adding the prefernces list from the server response
             for (i = 0; i < preferenceList.length; i++) {
                 generalPreferences.push({ name: preferenceList[i].Name });
             }
 
             $scope.allergies = generalAllergies;
             $scope.preferences = generalPreferences;
-
             }, function errorCallback(response) {
                 console.log(response);
             // called asynchronously if an error occurs
@@ -38,21 +43,26 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
         });
     });
 
+    // check if the alergies and prefernces lists are valid
     CheckValidLists = function () {
         var noneList = ["None"];
-        if ($scope.selectedAllergies === undefined)
+
+        if ($scope.selectedAllergies === undefined) {
             $scope.selectedAllergies = noneList;
-        if ($scope.selectedNutritionalPreferences === undefined)
+        }
+           
+        if ($scope.selectedNutritionalPreferences === undefined) {
             $scope.selectedNutritionalPreferences = noneList;
+        } 
     }
 
     $scope.createMenu = function () {
         if (!$scope.hasReceivedBloodTests) {
             swal("Error", "we have to receive your blood tests first! please click on the right button", "error");
         } else {
-
             CheckValidLists();
 
+            // sending the users personal date to the server
             var req = {
                 method: 'POST',
                 url: 'http://localhost:51149/api/PersonalZone',
@@ -69,14 +79,14 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
             }
 
             $http(req).then(function successCallback(response) {
-                // this callback will be called asynchronously
-                // when the response is available
+                // this callback will be called asynchronously when the response is available
                 console.log(response);
-                //$rootScope.user = angular.copy(response.data);
+
+                // calling the calc menu event (to be cougth in menu controller)
                 $rootScope.$broadcast('calcMenu');
 
+                // scrolling the page to the menu section
                 $anchorScroll('menu');
-//                $scope.loginForm = {};
             }, function errorCallback(response) {
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
@@ -108,24 +118,10 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
         }        
     };
 
+    // clearing the data when a user is logged in
     $rootScope.$on('userLoggedIn', function (evt) {
         $scope.bloodElements = undefined;
         $scope.hasReceivedBloodTests = false;
     });
 });
 
-beatApp.directive('selectpicker', function () {
-    return {
-        restrict: 'E',
-        scope: {
-            array: '=',
-            model: '=',
-            class: '='
-        },
-        template: '<select multiple class="selectpicker" ng-model="model" ng-options="o.name as o.name for o in array"></select>',
-        replace: true,
-        link: function (scope, element, attrs) {
-            $(element).selectpicker();
-        }
-    }
-});

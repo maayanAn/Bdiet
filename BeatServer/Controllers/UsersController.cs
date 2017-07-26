@@ -18,18 +18,6 @@ namespace BeatServer.Controllers
             return Ok();
         }
 
-        // GET: api/Users
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        //// GET: api/Users/5
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
         // POST: api/Users
         [ResponseType(typeof(User))]
         public IHttpActionResult Post([FromBody]User value)
@@ -39,24 +27,16 @@ namespace BeatServer.Controllers
                 return BadRequest(ModelState);
             }
 
-            User u = EntitiesManager.getInstance().Register(value);
+            // register the new user in the DB
+            User registeredUser = EntitiesManager.getInstance().Register(value);
 
-            if (u == null)
+            if (registeredUser == null)
             {
                 return BadRequest("Email already in use");
             }
 
-            return CreatedAtRoute("Default", new { id = u.UserId }, u);
+            return CreatedAtRoute("DefaultApi", new { id = registeredUser.UserId }, registeredUser);
         }
-
-        //// PUT: api/Users/5
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
-
-        //// DELETE: api/Users/5
-        //public void Delete(int id)
-        //{
-        //}
+        
     }
 }

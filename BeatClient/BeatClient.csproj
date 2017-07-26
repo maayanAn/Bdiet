@@ -104,6 +104,7 @@
     <Content Include="directives\menuDirective.js" />
     <Content Include="directives\personalZoneDirective.js" />
     <Content Include="directives\registerDirective.js" />
+    <Content Include="directives\selectPickerDirective.js" />
     <Content Include="html\menu.html" />
     <Content Include="html\personalZone.html" />
     <Content Include="html\register.html" />

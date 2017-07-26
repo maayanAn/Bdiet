@@ -17,7 +17,6 @@ namespace BeatServer.Models
         [DataMember]
         public virtual int FoodId { get; set; }
 
-
         [Required]
         [DataMember]
         public virtual string Name { get; set; }
@@ -29,8 +28,7 @@ namespace BeatServer.Models
         [Required]
         [DataMember]
         public virtual Mealtype MealType { get; set; }
-
-
+        
         [Required]
         [DataMember]
         public virtual string Amount { get; set; }
@@ -49,7 +47,7 @@ namespace BeatServer.Models
                 }
                 else
                 {
-                    return Utils.CommaSeparatedStringToIntList(Allergens);
+                    return Globals.CommaSeparatedStringToIntList(Allergens);
                 }
                 
             }
@@ -73,7 +71,7 @@ namespace BeatServer.Models
                 }
                 else
                 {
-                    return Utils.CommaSeparatedStringToIntList(Preferences);
+                    return Globals.CommaSeparatedStringToIntList(Preferences);
                 }
             }
             set
@@ -96,7 +94,7 @@ namespace BeatServer.Models
                 }
                 else
                 {
-                    return Utils.CommaSeparatedStringToIntList(Nutrients);
+                    return Globals.CommaSeparatedStringToIntList(Nutrients);
                 }
             }
             set
@@ -105,7 +103,7 @@ namespace BeatServer.Models
             }
         }
         
-
+        // compare two food elements
         public virtual bool Equals(Food other)
         {
             if (this.FoodId == other.FoodId)

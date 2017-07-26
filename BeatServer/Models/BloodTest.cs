@@ -8,7 +8,6 @@ using FluentNHibernate.Mapping;
 
 namespace BeatServer.Models
 {
-
     public class BloodTest
     {
         public virtual string name { get; set; }
@@ -18,6 +17,5 @@ namespace BeatServer.Models
         public virtual int min_val { get; set; }
 
         public virtual int max_val { get; set; }
-
     }
 }

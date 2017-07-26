@@ -21,6 +21,7 @@ namespace BeatServer.Controllers
         // GET: api/PersonalZone
         public PersonalZoneLists Get()
         {
+            // get the alergies and preferences from the DB
             IList<Allergy> listAllergies = EntitiesManager.getInstance().GetAllergies();
             IList<Preference> listPreferences = EntitiesManager.getInstance().GetPreferences();
 
@@ -46,7 +47,11 @@ namespace BeatServer.Controllers
             {
                 return BadRequest("Cannot go to menu, please try again");
             }
+
+            // create the alergies and prefernces dictionary
             Globals.ListToItemArray(Globals.pList);
+
+            // update the user data (allergies, prefernces)
             EntitiesManager.getInstance().UpdateUsersZone(value);
 
             return CreatedAtRoute("DefaultApi", new { id = pz.UserId }, pz);

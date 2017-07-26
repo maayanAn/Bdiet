@@ -28,8 +28,6 @@ namespace BeatServer.Models
         [DataMember]
         public virtual string Password { get; set; }
 
-
-        [Required]
         [DataMember]
         public virtual string Allergies { get; set; }
 
@@ -43,7 +41,7 @@ namespace BeatServer.Models
                 }
                 else
                 {
-                    return Utils.CommaSeparatedStringToIntList(Allergies);
+                    return Globals.CommaSeparatedStringToIntList(Allergies);
                 }
             }
             set
@@ -51,8 +49,7 @@ namespace BeatServer.Models
                 Allergies = string.Join(",", value);
             }
         }
-
-        [Required]
+        
         [DataMember]
         public virtual string Preferences { get; set; }
 
@@ -66,7 +63,7 @@ namespace BeatServer.Models
                 }
                 else
                 {
-                    return Utils.CommaSeparatedStringToIntList(Preferences);
+                    return Globals.CommaSeparatedStringToIntList(Preferences);
                 }
             }
             set
@@ -74,8 +71,7 @@ namespace BeatServer.Models
                 Preferences = string.Join(",", value);
             }
         }
-
-        [Required]
+        
         [DataMember]
         public virtual string NutrientLacks { get; set; }
 
@@ -89,7 +85,7 @@ namespace BeatServer.Models
                 }
                 else
                 {
-                    return Utils.CommaSeparatedStringToIntList(NutrientLacks);
+                    return Globals.CommaSeparatedStringToIntList(NutrientLacks);
                 }
             }
             set
@@ -113,8 +109,6 @@ namespace BeatServer.Models
             Map(x => x.Allergies);
             Map(x => x.Preferences);
             Map(x => x.NutrientLacks);
-            
         }
     }
-
 }

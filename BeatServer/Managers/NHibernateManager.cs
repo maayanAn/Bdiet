@@ -60,16 +60,8 @@ namespace BeatServer.Managers
 
             cfg.SetInterceptor(new Intercepter());
 
-            
-
             try
             {
-                //var ch = Fluently.Configure()
-                //        .Database(MySQLConfiguration.Standard
-                //        .ConnectionString(c => c.FromAppSetting("NHBCon")))
-                //        .Mappings(m => m.FluentMappings.AddFromAssembly(Assembly.GetExecutingAssembly()))
-                //        .BuildSessionFactory();
-
                 var ch = Fluently.Configure().Database(MySQLConfiguration.Standard.ConnectionString(c => c.FromAppSetting("NHBCon"))
                 .ShowSql())
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<User>())
@@ -79,11 +71,7 @@ namespace BeatServer.Managers
             }
             catch (Exception e)
             {
-                // inner exception
-                // No such host is known
-                // Unable to connect to any of the specified MySql hosts
             }
-            
 
             return null;
         }

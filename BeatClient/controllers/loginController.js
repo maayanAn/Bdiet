@@ -7,8 +7,8 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
     $scope.login = function () {
         var req = {
             method: 'POST',
-            url: 'http://localhost:51149/api/Login',
-            //url: 'http://db.cs.colman.ac.il/BEat/api/Login', // 51149 
+            url: 'http://localhost:51149/api/Login', // dev
+            //url: 'http://db.cs.colman.ac.il/BEat/api/Login', // prod
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin' : '*'
@@ -19,17 +19,21 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
             }
         }
 
+        // send the request and handle the response (success or error)
         $http(req).then(function successCallback(response) {
-            // this callback will be called asynchronously
-            // when the response is available
+            // this callback will be called asynchronously when the response is available
             console.log(response);
+
             $rootScope.user = angular.copy(response.data);
             swal("Hi " + $rootScope.user.Name, "You logged in successfuly", "success");
 
+            // alerting the other controllers that a user has logged in
             $rootScope.$broadcast('userLoggedIn');
 
-            //$location.hash('personal-zone');
+            // scroll the page to the personal zone section
             $anchorScroll('personal-zone');
+
+            // clear the login form
             $scope.loginForm = {};
         }, function errorCallback(response) {
             // called asynchronously if an error occurs
@@ -40,15 +44,15 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
     }
 
     $scope.register = function () {
-
+        // Validating the password
         if ($scope.registerForm.password !== $scope.registerForm.variPassword) {
             swal("Error", "Password not the same", "error");
         }
         else {
             var req = {
                 method: 'POST',
-                url: 'http://localhost:51149/api/Users',
-                //url: 'http://db.cs.colman.ac.il/BEat/api/Users',
+                url: 'http://localhost:51149/api/Users', // dev
+                //url: 'http://db.cs.colman.ac.il/BEat/api/Users', // prod
                 headers: {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
@@ -60,17 +64,21 @@ beatApp.controller('loginController', function loginController($scope, $rootScop
                 }
             }
 
+            // send the request and handle the response (success or error)
             $http(req).then(function successCallback(response) {
-                // this callback will be called asynchronously
-                // when the response is available
+                // this callback will be called asynchronously when the response is available
                 console.log(response);
+
                 $rootScope.user = angular.copy(response.data);
                 swal("Hi " + $rootScope.user.Name, "Welcome to B-eat!", "success");
 
+                // alerting the other controllers that a user has logged in
                 $rootScope.$broadcast('userLoggedIn');
 
-                //$location.hash('personal-zone');
+                // scroll the page to the personal zone section
                 $anchorScroll('personal-zone');
+
+                // clear the register form
                 $scope.registerForm = {};
             }, function errorCallback(response) {
                 // called asynchronously if an error occurs

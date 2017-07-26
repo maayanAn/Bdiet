@@ -20,31 +20,34 @@ namespace BeatServer.Genetic_algorithm
         {
             Population population = new Population();
 
+            // running according to the number of generations requiered
             for (int j = 1; j < Globals.NumOfGenerations; j++)
             {
-                int bla = 1;
+                // calculating the fitness of each menu
                 for (int i = 0; i < population.Menues.Length; i++)
                 {
                     SetCalcFitness(ref population.Menues[i]);
 
                 }
 
+                // save the best menu of the generation
                 Menu IterationBestMenu = population.Menues.Where(x => x.Score == population.Menues.Max(y => y.Score)).First();
+
                 if (CurrBestMenu == null || IterationBestMenu.Score > CurrBestMenu.Score)
                 {
                     CurrBestMenu = IterationBestMenu;
                 }
 
+                // start the next generation (every time except the last one)
                 if (j != Globals.NumOfGenerations-1)
                 {
                     population = population.GetNextGeneration();
                 }
-                
             }
 
             CurrBestMenu.User = User;
+
             return CurrBestMenu;
-            
         }
 
         private int SetCalcFitness(ref Menu menu)
@@ -52,10 +55,9 @@ namespace BeatServer.Genetic_algorithm
             int Score = 0;
             List<Food> foodList = new List<Food>();
 
-            // בדיקת אבות המזון
+            // food group check
             foreach (Meal currMeal in menu.MealList)
             {
-
                 switch (currMeal.Type)
                 {
                     case MealTypes.Everything:
@@ -182,28 +184,18 @@ namespace BeatServer.Genetic_algorithm
                     default:
                         break;
                 }
-
-                // create food list
-                //foreach (Food FoodItem in currMeal.FoodsList)
-                //{
-                //    if (!foodList.Contains(FoodItem))
-                //    {
-                //        foodList.Add(FoodItem);
-                //    }
-                //}
-                foodList.AddRange(currMeal.FoodsList);
                 
+                foodList.AddRange(currMeal.FoodsList);
             }
 
             foodList = foodList.Distinct().ToList();
 
-            // בדיקת גיוון
+            // versatility check
             Score += foodList.Count * 2;
-
 
             foreach (Food foodItem in foodList)
             {
-                // בדיקת חוסרים
+                // nutrient lack check
                 foreach (int lack in User.NutrientLacksList)
                 {
                     if (foodItem.NutrientsIdList.Contains(lack))
@@ -212,14 +204,13 @@ namespace BeatServer.Genetic_algorithm
                     }
                 }
 
-                // בדיקת כולסטרול
+                // cholesterol check
                 if (User.NutrientLacksList.Contains(9) && !foodItem.NutrientsIdList.Contains(9))
                 {
                     Score += 2;
                 }
 
-                // בדיקת אלרגיות
-
+                // allergies check
                 foreach (int allergy in User.AllergiesIdList)
                 {
                     if (foodItem.AllergessIdList.Contains(allergy))
@@ -227,19 +218,15 @@ namespace BeatServer.Genetic_algorithm
                         Score = 0;
                     }
                 }
-                
-                // בדיקת העדפות
-                bool isPreferenceFound = false;
 
-                if (User.PreferencesIdList.Count == 0)
-                {
-                    isPreferenceFound = true;
-                }
+                // prefernces check
+                bool isPreferenceFound = true;
+                
                 foreach (int preference in User.PreferencesIdList)
                 {
-                    if (foodItem.PreferencesIdList.Contains(preference))
+                    if (!foodItem.PreferencesIdList.Contains(preference))
                     {
-                        isPreferenceFound = true;
+                        isPreferenceFound = false;
                     }
                 }
 

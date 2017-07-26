@@ -12,8 +12,6 @@ namespace BeatServer.Managers
     {
         private static EntitiesManager m_instance;
         private static Random Rand;
-        //public static Dictionary<string, int> allergyArray;
-        //public static Dictionary<string, int> preferenceArray;
         public static IList<Mealtype> MealTypesList = null;
         public static IList<Foodgroup> FoodGroupList = null;
         public static Dictionary<Mealtype, IList<Food>> FoodsByMeal = new Dictionary<Mealtype, IList<Food>>();
@@ -35,23 +33,12 @@ namespace BeatServer.Managers
 
         #region login
 
-
         public IEnumerable<User> GetUsers()
         {
             using (var session = NHibernateManager.OpenSession())
             {
                 IList<User> users = session.CreateCriteria<User>().List<User>();
-                //IList<int> l = users[0].AllergiesIdList;
-                //l.Add(1);
-                //users[0].AllergiesIdList = l;
 
-                //IList<Preference> preferences = session.CreateCriteria<Preference>().List<Preference>();
-                //IList<Allergy> allergies = session.CreateCriteria<Allergy>().List<Allergy>();
-                //IList<Mealtype> mealtypes = session.CreateCriteria<Mealtype>().List<Mealtype>();
-                //IList<Foodgroup> foodgroup = session.CreateCriteria<Foodgroup>().List<Foodgroup>();
-                //IList<Menu> menues = session.CreateCriteria<Menu>().List<Menu>();
-                //IList<Nutrient> nutrients = session.CreateCriteria<Nutrient>().List<Nutrient>();
-                //IList<Food> food = session.CreateCriteria<Food>().List<Food>();
                 return users;
             }
         }
@@ -90,6 +77,7 @@ namespace BeatServer.Managers
                 {
                     using (var transaction = session.BeginTransaction())
                     {
+                        // try to save the new user
                         try
                         {
                             ret = details;
@@ -147,7 +135,6 @@ namespace BeatServer.Managers
             }
         }
 
-
         public User UpdateUsersZone(PersonalZone details)
         {
             User ret = GetUser(details.UserId);
@@ -158,6 +145,8 @@ namespace BeatServer.Managers
                 {
                     ret.Allergies = ConvertOptionNameToId(details.userAllergies, Globals.allergyArray);
                     ret.Preferences = ConvertOptionNameToId(details.userPreferences, Globals.preferenceArray);
+
+                    // try to update the user in the DB
                     try
                     {                        
                         session.Update(ret);                        
@@ -172,25 +161,10 @@ namespace BeatServer.Managers
             return ret;
         }
 
-
-        //public void ListToItemArray(PersonalZoneLists lists)
-        //{
-        //    Globals.allergyArray =new Dictionary<string, int>();     
-        //    foreach (var item in lists.allergiesList)
-        //    {
-        //        Globals.allergyArray[item.Name] = item.Id;
-        //    }
-
-        //    Globals.preferenceArray = new Dictionary<string, int>();
-        //    foreach (var item in lists.preferencesList)
-        //    {
-        //        Globals.preferenceArray[item.Name] = item.Id;
-        //    }
-        //}
-
         public string ConvertOptionNameToId(List<string> userItems, Dictionary<string, int> generalArray)
         {
             string stringIds = "";
+
             if (userItems[0].Equals("None"))
             {
                 stringIds = null;
@@ -220,11 +194,12 @@ namespace BeatServer.Managers
                     try
                     {
                         User user = GetUser(UserId);
-                        //user.NutrientLacksList = lacks;
+
                         if (lacks != null)
                             user.NutrientLacks = string.Join(",", lacks.ToArray());
                         else
                             user.NutrientLacks = null;
+
                         session.Update(user);
                         transaction.Commit();
                     }
@@ -260,49 +235,55 @@ namespace BeatServer.Managers
 
         #region Meal generator
 
+        // Get the requested num of foods of the specific meal type randomly
         public List<Food> GetFoods(int NumOfFoods, MealTypes mainType)
         {
             using (var session = NHibernateManager.OpenSession())
             {
                 List<Food> result = new List<Food>();
 
+                // get the meal type list (only happens once)
                 if (MealTypesList == null)
                 {
                     MealTypesList = session.CreateCriteria<Mealtype>().List<Mealtype>();
                 }
 
                 Mealtype currMealType = MealTypesList.Where(x => x.Id == (int)mainType).First();
+
                 IList<Food> foodList;
 
+                // get the meal type food items (only once per meal type)
                 if (!FoodsByMeal.ContainsKey(currMealType))
                 {
-
                     if (mainType == MealTypes.Snack)
                     {
-
+                        // geting only the items that are snacks
                         foodList = session.CreateCriteria<Food>()
                         .Add(Expression.Eq("MealType", currMealType))
                         .List<Food>();
                     }
                     else
                     {
+                        // in all other meal types we want to get the meal type food items plus the everything category
                         foodList = session.CreateCriteria<Food>()
                         .Add(Expression.Or(Expression.Eq("MealType", currMealType),
                         Expression.Eq("MealType", MealTypesList.Where(x => x.Id == (int)MealTypes.Everything).First())))
                         .List<Food>();
                     }
 
-                FoodsByMeal[currMealType] = foodList;
-            }
+                    // save the food items localy
+                    FoodsByMeal[currMealType] = foodList;
+                }
+                // if the items where already pulled from the DB
                 else
                 {
-                foodList = FoodsByMeal[currMealType];
-            }
+                    foodList = FoodsByMeal[currMealType];
+                }
 
 
-            if (foodList.Count > 0)
+                if (foodList.Count > 0)
                 {
-
+                    // randomly choose the requesed number of foods from the group
                     for (int i = 0; i < NumOfFoods; i++)
                     {
                         int ChosenIndex = Rand.Next(0, foodList.Count - 1);
@@ -313,38 +294,6 @@ namespace BeatServer.Managers
 
                 return result;
             }   
-        }
-
-        public Food GetFoodByGroup(MealTypes mainType, int foodGroup)
-        {
-            using (var session = NHibernateManager.OpenSession())
-            {
-                if (MealTypesList == null)
-                {
-                    MealTypesList = session.CreateCriteria<Mealtype>().List<Mealtype>();
-                }
-
-                Mealtype currMealType = MealTypesList.Where(x => x.Id == (int)mainType).First();
-
-                if (FoodGroupList == null)
-                {
-                    FoodGroupList = session.CreateCriteria<Foodgroup>().List<Foodgroup>();
-                }
-
-                Foodgroup currFoodType = FoodGroupList.Where(x => x.Id == foodGroup).First();
-                IList<Food> foodList = session.CreateCriteria<Food>()
-                .Add(Expression.Or(Expression.Eq("MealType", currMealType), 
-                Expression.Eq("MealType", MealTypesList.Where(x => x.Id == (int)MealTypes.Everything).First())))
-                .Add(Expression.Eq("FoodGroup", currFoodType))
-                .List<Food>();
-
-                Random Rand = new Random();
-
-                int ChosenIndex = Rand.Next(0, foodList.Count - 1);
-
-                return foodList[ChosenIndex];
-                
-            }
         }
 
         #endregion
