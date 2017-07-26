@@ -5,7 +5,7 @@
                 <h2 class="section-heading">Menu</h2>
                 <h3 ng-show="menu" class="section-subheading text-muted">Your personal menu - designed just for you</h3>
                 <h3 ng-show="!menu" class="section-subheading text-muted">Get your new menu in the personal zone</h3>
-                <div id="waitDiv" ng-show="!menu">
+                <div id="waitDiv" ng-show="isWaiting">
                     <div id="spinnerContainer">
                         <i class="fa fa-spinner fa-spin" id="waitSpinner"></i>
                     </div>

@@ -42,7 +42,7 @@ namespace BeatServer.Models
         {
             string result = "";
             FoodsList.ForEach(x => result += string.Format("{0} of {1}, ", x.Amount, x.Name));
-            result.TrimEnd(new char[] { ',' });
+            result = result.TrimEnd(new char[] { ',',' ' });
 
             return result;
         }

@@ -241,3 +241,6 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /BeatServer - Copy
+/BeatClient/Properties/PublishProfiles
+/BeatServer/Properties/PublishProfiles
+/BeatServer/ClassDiagram1.cd

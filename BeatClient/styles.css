@@ -36,6 +36,15 @@ footer {
     background-image: url('img/rightReg.jpg');
 }
 
+
+/*section#register {
+    height: 975px;
+}
+
+header {
+    height: 975px;
+}*/
+
 section#login {
     padding-bottom: 0;
 }
@@ -162,4 +171,3 @@ input[type=range]:focus::-ms-fill-upper {
     text-align: center;
     font-size: 100px;
 }
-    

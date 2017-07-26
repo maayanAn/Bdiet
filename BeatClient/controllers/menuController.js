@@ -1,12 +1,14 @@
 ﻿var beatApp = angular.module('beatApp');
 
 beatApp.controller('menuController', function menuController($scope, $rootScope, $http) {
+    $scope.isWaiting = false;
+    $scope.menu = undefined;
 
     var calcMenu = function () {
-
         var req = {
             method: 'GET',
             url: 'http://localhost:51149/api/Menu?id=' + $rootScope.user.UserId
+            //url: 'http://db.cs.colman.ac.il/BEat/api/Menu?id=' + $rootScope.user.UserId
         }
 
         $http(req).then(function successCallback(response) {
@@ -32,54 +34,28 @@ beatApp.controller('menuController', function menuController($scope, $rootScope,
             ];
 
             $scope.menu = $scope.menusList[0].menu;
-
+            $scope.isWaiting = false;
         }, function errorCallback(response) {
             // called asynchronously if an error occurs
             // or server returns response with an error status.
             console.log(response);
             swal("Error", "Please try again later", "error");
+            $scope.isWaiting = false;
         });
     }
+
     
 
-    //$scope.menusList = [
-    //    {
-    //        UserId: 1,
-    //        menu: {
-    //            breakfast: 'Two slices of bread, yellow cheese, tomato, an egg, cucumber',
-    //            morningSnack: 'energy bar, a frut',
-    //            lunch: 'So carbohydrate, chicken',
-    //            afternoonSnack: 'energy bar, a frut',
-    //            dinner: 'Two slices of bread, white cheese, tomato, cucumber'
-    //        }
-    //    }
-    //];
 
-    $scope.menu = undefined;
+    $rootScope.$on('userLoggedIn', function (evt) {
+        $scope.menusList = undefined;
+        $scope.menu = undefined;
+    });
 
-    //var getMenu = function () {
-    //    $scope.menu = undefined;
-    //    for (var i = 0; i < $scope.menusList.length; i++) {
-    //        if ($rootScope.user.id == $scope.menusList[i].UserId) {
-    //            $scope.menu = $scope.menusList[i].menu;
-    //        }
-    //    }
-    //}
-
-    //$rootScope.$on('userLoggedIn', function (evt) {
-    //    calcMenu();
-    //    //getMenu();
-    //});
-
-    //var calcMenu = function () {
-    //    var newMenu = angular.copy($scope.menusList[0]);
-    //    newMenu.UserId = $rootScope.user.id;
-
-    //    $scope.menusList.push(newMenu);
-    //    $scope.menu = newMenu.menu;
-    //}
+ 
 
     $rootScope.$on('calcMenu', function (evt) {
+        $scope.isWaiting = true;
         calcMenu();
     });
 });

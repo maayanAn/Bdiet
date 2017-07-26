@@ -112,6 +112,7 @@
     <Content Include="img\about\2.jpg" />
     <Content Include="img\about\3.jpg" />
     <Content Include="img\about\4.jpg" />
+    <Content Include="img\about\5.jpg" />
     <Content Include="img\about\fruitPic.jpg" />
     <Content Include="img\forks.jpg" />
     <Content Include="img\header-bg.jpg" />
@@ -123,6 +124,8 @@
     <Content Include="js\agency.min.js" />
     <Content Include="js\contact_me.js" />
     <Content Include="js\jqBootstrapValidation.js" />
+    <Content Include="js\sweetalerts\sweetalert.css" />
+    <Content Include="js\sweetalerts\sweetalert.min.js" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -136,6 +139,9 @@
     <Content Include="vendor\font-awesome\fonts\fontawesome-webfont.woff" />
     <Content Include="vendor\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="vendor\font-awesome\fonts\FontAwesome.otf" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\CustomProfile2.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -2,14 +2,19 @@ var beatApp = angular.module('beatApp');
 
 beatApp.controller('personalZoneController', function personalZoneController($scope, $rootScope, $location, $anchorScroll, $http) {
     $scope.hasReceivedBloodTests = false;
-
     var generalAllergies = [];
-    generalPreferences = [];
+    var generalPreferences = [];
+    $scope.allergies = [];
+    $scope.preferences = [];
+
     $(function (ngModelCtrl) {
         $http({
             method: 'GET',
-            url: 'http://localhost:51149/api/PersonalZone'            
+            url: 'http://localhost:51149/api/PersonalZone' 
+            //url: 'http://db.cs.colman.ac.il/BEat/api/PersonalZone'            
         }).then(function successCallback(response) {
+            console.log(response);
+
              //this callback will be called asynchronously
              //when the response is available
             var allergyList = response.data.allergiesList;
@@ -24,7 +29,8 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
             $scope.allergies = generalAllergies;
             $scope.preferences = generalPreferences;
 
-        }, function errorCallback(response) {
+            }, function errorCallback(response) {
+                console.log(response);
             // called asynchronously if an error occurs
             // or server returns response with an error status.
             $scope.allergies.push({ name: "None" });
@@ -50,6 +56,7 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
             var req = {
                 method: 'POST',
                 url: 'http://localhost:51149/api/PersonalZone',
+                //url: 'http://db.cs.colman.ac.il/BEat/api/PersonalZone',
                 headers: {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
@@ -65,7 +72,7 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
                 // this callback will be called asynchronously
                 // when the response is available
                 console.log(response);
-                $rootScope.user = angular.copy(response.data);
+                //$rootScope.user = angular.copy(response.data);
                 $rootScope.$broadcast('calcMenu');
 
                 $anchorScroll('menu');
@@ -86,6 +93,7 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
             var req = {
                 method: 'GET',
                 url: 'http://localhost:51149/api/BloodTestsResults?UserId=' + $rootScope.user.UserId 
+                //url: 'http://db.cs.colman.ac.il/BEat/api/BloodTestsResults?UserId=' + $rootScope.user.UserId 
             }
 
             $http(req).then(function successCallback(response) {
@@ -99,6 +107,11 @@ beatApp.controller('personalZoneController', function personalZoneController($sc
             });
         }        
     };
+
+    $rootScope.$on('userLoggedIn', function (evt) {
+        $scope.bloodElements = undefined;
+        $scope.hasReceivedBloodTests = false;
+    });
 });
 
 beatApp.directive('selectpicker', function () {
