@@ -14,19 +14,6 @@ namespace BeatServer.Controllers
     [RoutePrefix("api/Login")]
     public class LoginController : ApiController
     {
-        //// for testing DB conenction
-        //// GET: api/Login
-        //public IEnumerable<string> Get()
-        //{
-            
-        //    IEnumerable<User> lat = EntitiesManager.getInstance().GetUsers();        
-
-        //    GeneticAlgorithmGenerator GA = new GeneticAlgorithmGenerator(lat.First());
-        //    Menu m = GA.RunAlgorithm();
-
-        //    return new string[] { "value1", "value2" };
-        //}
-
         // Enable all the options in config file
         public IHttpActionResult Options()
         {
